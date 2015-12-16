@@ -19,7 +19,7 @@ RF24Mesh mesh(radio, network);
  * This will be stored in EEPROM on AVR devices, so remains persistent between further uploads, loss of power, etc.
  *
  **/
-#define nodeID 1
+#define nodeID 2
 
 const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
@@ -28,7 +28,6 @@ unsigned int signalMax = 0;
 unsigned int signalMin = 1024;
 
 uint32_t PrevTimer = 0;
-uint32_t analog = 0;
 
 struct payload_t {
   unsigned long ms;
@@ -74,7 +73,7 @@ void loop() {
    
  
       // Send an 'M' type message containing the ofnodonsdonc
-    if (!mesh.write(&volts, 'M', sizeof(analog))) {
+    if (!mesh.write(&volts, 'M', sizeof(volts))) {
 
       // If a write fails, check connectivity to the mesh network
       if ( ! mesh.checkConnection() ) {

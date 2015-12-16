@@ -72,7 +72,7 @@ void loop() {
    double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
    
  
-      // Send an 'M' type message containing the ofnodonsdonc
+      // Send an 'M' type message containing the volts
     if (!mesh.write(&volts, 'M', sizeof(volts))) {
 
       // If a write fails, check connectivity to the mesh network

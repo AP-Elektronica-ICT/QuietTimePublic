@@ -1,13 +1,3 @@
-
-/** RF24Mesh_Example.ino by TMRh20
- *
- * This example sketch shows how to manually configure a node via RF24Mesh, and send data to the
- * master node.
- * The nodes will refresh their network address as soon as a single write fails. This allows the
- * nodes to change position in relation to each other and the master node.
- */
-
-
 #include "RF24.h"
 #include "RF24Network.h"
 #include "RF24Mesh.h"
@@ -31,8 +21,13 @@ RF24Mesh mesh(radio, network);
  **/
 #define nodeID 1
 
+const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
+unsigned int sample;
+unsigned int peakToPeak = 0;   // peak-to-peak level 
+unsigned int signalMax = 0;
+unsigned int signalMin = 1024;
 
-uint32_t displayTimer = 0;
+uint32_t PrevTimer = 0;
 uint32_t analog = 0;
 
 struct payload_t {
@@ -51,21 +46,35 @@ void setup() {
 }
 
 
-
 void loop() {
 
   mesh.update();
 
-  // Send to the master node every halfsecond
-  if (millis() - displayTimer >= 1000) {
-    displayTimer = millis();
+  // Send to the master node every 5 seconds
+  if (millis() - PrevTimer >= 5000) {
     
-    analog++;
-    
-    if(analog == 256)
-      analog = 0;
-    // Send an 'M' type message containing the current millis()
-    if (!mesh.write(&analog, 'M', sizeof(analog))) {
+    // collect data for 50 mS
+   while (millis() - PrevTimer < sampleWindow)
+   {
+      sample = analogRead(0);
+      if (sample < 1024)  // toss out spurious readings
+      {
+         if (sample > signalMax)
+         {
+            signalMax = sample;  // save just the max levels
+         }
+         else if (sample < signalMin)
+         {
+            signalMin = sample;  // save just the min levels
+         }
+      }
+   }
+   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+   double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
+   
+ 
+      // Send an 'M' type message containing the ofnodonsdonc
+    if (!mesh.write(&volts, 'M', sizeof(analog))) {
 
       // If a write fails, check connectivity to the mesh network
       if ( ! mesh.checkConnection() ) {

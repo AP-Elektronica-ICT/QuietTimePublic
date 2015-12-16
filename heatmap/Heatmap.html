@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Heatmap</title>
+    
+    
+
+    
+  
+
+   
+    
+</head>
+<body >
+    <div class="heatmap">
+
+
+    </div>
+  
+    
+
+<style>
+        
+    .heatmap{
+        
+         
+            display: block;   
+            height:540px;
+            width:940px;
+            position:relative;
+            background-image:url(Images/12285940_1014970058575270_543409493_n.jpg);
+    }
+
+        
+</style>
+
+
+    
+
+    <script src="Heatmap/heatmap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script>
+
+        // minimal heatmap instance configuration
+        var heatmapInstance = h337.create({
+            // only container is required, the rest will be defaults
+            container: document.querySelector('.heatmap')
+        });
+
+        // now generate some random data
+        var sensor = [];
+        var max = 100;
+        var width = 940;
+        var height = 540;
+        var Story = 0;
+        var p = 0;
+        var obj;
+
+        // Objecten sensoren en locaties
+
+        sensor[0] = {
+            place: 'Gang gelijkvloers', 
+            x: 640,
+            y: 500,
+            value: 0,
+            // radius configuration on point basis
+            radius: 70
+        }
+            
+         sensor[1] = {
+            place: 'Gang eerste verdiep', 
+            x: 340,
+            y: 200,
+            value: 0,
+            // radius configuration on point basis
+            radius: 70
+        }
+        
+        
+        
+
+        // heatmap data format
+        var data = {
+            max: max,
+            data: sensor
+        };
+        // if you have a set of datapoints always use setData instead of addData
+        // for data initialization
+        heatmapInstance.setData(data);
+    </script>
+    <script>
+        function Update()
+        {
+                          
+            var sensorData = Refreshdata();
+            console.log(sensorData);
+
+            if (sensorData.id == 1) {
+                sensor[0].value = sensorData.value;
+                sensor.push(sensor[0].value);
+
+            }
+            else if (sensorData.id == 2) {
+                sensor.push(sensor[1].value);
+            }
+            else {
+
+            }
+                
+            heatmapInstance.setData(data);
+                               
+       
+
+        }
+
+        setInterval(function () {
+          
+           Update();
+        }, 500);
+
+        function Refreshdata() {
+           
+           
+
+            $.ajax({
+                url: "../Json/Sensor.json",
+                success: function (data) {
+                    obj = data;
+                    //console.log(obj);                  
+                }
+            });
+            
+            return obj;
+
+        }
+
+    </script>
+   
+  
+
+</body>
+</html>

@@ -21,18 +21,12 @@ RF24Mesh mesh(radio, network);
  **/
 #define nodeID 2
 
-const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
-unsigned int sample;
 unsigned int peakToPeak = 0;   // peak-to-peak level 
 unsigned int signalMax = 0;
 unsigned int signalMin = 1024;
+unsigned int sample = 0;
 
 uint32_t PrevTimer = 0;
-
-struct payload_t {
-  unsigned long ms;
-  unsigned long counter;
-};
 
 void setup() {
 
@@ -50,10 +44,14 @@ void loop() {
   mesh.update();
 
   // Send to the master node every 5 seconds
-  if (millis() - PrevTimer >= 5000) {
+  if (millis() - PrevTimer >= 2000) {
+    PrevTimer = millis();
+
     
+    signalMax = 0;
+    signalMin = 1024;
     // collect data for 50 mS
-   while (millis() - PrevTimer < sampleWindow)
+   while (millis() - PrevTimer < 50)
    {
       sample = analogRead(0);
       if (sample < 1024)  // toss out spurious readings
@@ -67,23 +65,29 @@ void loop() {
             signalMin = sample;  // save just the min levels
          }
       }
-   }
-   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
-   double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
+   } //end of sampling
    
+   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+   uint32_t volts = ((peakToPeak * 3.3) / 1024)*100;  // convert to volts
+   Serial.println(volts);
  
       // Send an 'M' type message containing the volts
-    if (!mesh.write(&volts, 'M', sizeof(volts))) {
-
+    if (!mesh.write(&volts, 'M', sizeof(volts))) 
+	{
       // If a write fails, check connectivity to the mesh network
-      if ( ! mesh.checkConnection() ) {
+      if (! mesh.checkConnection()) 
+	  {
         //refresh the network address
         Serial.println("Renewing Address");
         mesh.renewAddress();
-      } else {
+      } 
+	  else 
+	  {
         Serial.println("Send fail, Test OK");
       }
-    } else {
+    } 
+	else 
+	{
       Serial.println("Send OK: ");
     }
   }

@@ -19,7 +19,7 @@ RF24Mesh mesh(radio, network);
  * This will be stored in EEPROM on AVR devices, so remains persistent between further uploads, loss of power, etc.
  *
  **/
-#define nodeID 2
+#define nodeID 1
 
 unsigned int peakToPeak = 0;   // peak-to-peak level 
 unsigned int signalMax;        //aanmaken min en max signaalwaarde

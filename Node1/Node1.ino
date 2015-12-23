@@ -22,17 +22,19 @@ RF24Mesh mesh(radio, network);
 #define nodeID 2
 
 unsigned int peakToPeak = 0;   // peak-to-peak level 
-unsigned int signalMax = 0;
-unsigned int signalMin = 1024;
-unsigned int sample = 0;
+unsigned int signalMax;        //aanmaken min en max signaalwaarde
+unsigned int signalMin;
+unsigned int sample = 0;       //variabele voor het inlezen van het signaal
 
 uint32_t PrevTimer = 0;
 
 void setup() {
 
-  Serial.begin(115200);
-  // Set the nodeID manually
-  mesh.setNodeID(nodeID);
+  Serial.begin(115200); 
+  
+  // Set the nodeID manually each node must have a different ID
+  mesh.setNodeID(nodeID);  
+  
   // Connect to the mesh
   Serial.println(F("Connecting to the mesh..."));
   mesh.begin();
@@ -43,35 +45,37 @@ void loop() {
 
   mesh.update();
 
-  // Send to the master node every 5 seconds
+  // Send to the master node every 2 seconds
   if (millis() - PrevTimer >= 2000) {
-    PrevTimer = millis();
+    PrevTimer = millis(); //initiele tijd bijhouden zodat we kunnen zien wanneer er 5seconde over zijn
 
     
     signalMax = 0;
     signalMin = 1024;
-    // collect data for 50 mS
+    
+    // collect data for 50 ms, zo hier kunnen we het gemiddelde tussen het max en min signaal berekenen. 
+    // ipv misch toevallig net het maximum signaal uit te lezen en als volgt een vertekend beeld te krijgen. 
    while (millis() - PrevTimer < 50)
    {
-      sample = analogRead(0);
-      if (sample < 1024)  // toss out spurious readings
+      sample = analogRead(0);     //uitgangssignaal van de microfoon inlezen
+      if (sample < 1024)          // verwijderen van fictieve signalen
       {
-         if (sample > signalMax)
-         {
-            signalMax = sample;  // save just the max levels
+         if (sample > signalMax)      //initeel is elk signaal groter als signalmax(signalmax = 0). signalmax zal dus gelijk gesteld worden aan het eerste signaal. 
+         {                            //is het Tweede signaal groter dan het eerste dan zal dit bewaard worden in signal max enz.
+            signalMax = sample;       
          }
-         else if (sample < signalMin)
+         else if (sample < signalMin) //is de sample niet groter als signal max gaan we kijken of hij kleiner is dan signalmin. dit is de eerste keer sowieso het geval. 
          {
-            signalMin = sample;  // save just the min levels
+            signalMin = sample;
          }
       }
-   } //end of sampling
+   }
    
-   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
-   uint32_t volts = ((peakToPeak * 3.3) / 1024)*100;  // convert to volts
-   Serial.println(volts);
+   peakToPeak = signalMax - signalMin;                 // grootste sample en kleinste van elkaar aftrekken om de peak-peak amplitude te bekomen
+   uint32_t volts = ((peakToPeak * 3.3) / 1024)*100;  // convert naar  voltage
+   Serial.println(volts);                             //voltage in serial monitor weergeven
  
-      // Send an 'M' type message containing the volts
+      // zend een 'M' type bericht naar de raspberry pi
     if (!mesh.write(&volts, 'M', sizeof(volts))) 
 	{
       // If a write fails, check connectivity to the mesh network

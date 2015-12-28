@@ -44,16 +44,14 @@ function Update()
 
     for(var s in sensorData)
     {
-        if (sensorData[s].id == 2)
+        if (sensorData[s].id == 1)
         {
             sensor[0].value = sensorData[s].sound * 10;
             sensor.push(sensor[0].value);
         }
-        else if (sensorData[s].id == 99)
+        else if (sensorData[s].id == 2)
         {
-            //sensor[1].value = sensorData[s].sound * 10;
-            //At the moment this value is hardcoded, this need to solder second mic
-            sensor[1].value = 5 * 10;
+            sensor[1].value = sensorData[s].sound * 10;
             sensor.push(sensor[1].value);
         }
     }

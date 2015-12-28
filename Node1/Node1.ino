@@ -70,6 +70,8 @@ void loop() {
          }
       }
    }
+
+   
    
    peakToPeak = signalMax - signalMin;                 // grootste sample en kleinste van elkaar aftrekken om de peak-peak amplitude te bekomen
    uint32_t volts = ((peakToPeak * 3.3) / 1024)*100;  // convert naar  voltage

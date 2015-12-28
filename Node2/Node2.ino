@@ -21,7 +21,7 @@ RF24Mesh mesh(radio, network);
  **/
 #define nodeID 2
 
-unsigned int Mean = 0;   // peak-to-peak level 
+unsigned int peakToPeak = 0;   // peak-to-peak level 
 unsigned int signalMax;        //aanmaken min en max signaalwaarde
 unsigned int signalMin;
 unsigned int sample = 0;       //variabele voor het inlezen van het signaal
@@ -70,9 +70,11 @@ void loop() {
          }
       }
    }
+
    
-   Mean = (signalMax + signalMin)/2;                 // grootste sample en kleinste van elkaar aftrekken om de peak-peak amplitude te bekomen
-   uint32_t volts = ((Mean * 3.3) / 1024)*100;  // convert naar  voltage
+   
+   peakToPeak = signalMax - signalMin;                 // grootste sample en kleinste van elkaar aftrekken om de peak-peak amplitude te bekomen
+   uint32_t volts = ((peakToPeak * 3.3) / 1024)*100;  // convert naar  voltage
    Serial.println(volts);                             //voltage in serial monitor weergeven
  
       // zend een 'M' type bericht naar de raspberry pi

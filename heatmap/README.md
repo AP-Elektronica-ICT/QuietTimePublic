@@ -74,4 +74,4 @@ Uiteindelijk waneer alle sensoren zijn uitgelezen die we hadden binnengebregen r
 
 ####Loop
 
-Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constant worden uitgevoerd om de laatste info van de sensoren op de heatmap te zetten. Dit gebeurt door een intervan in te stellen van een gekozen tijd (500ms in ons geval) en dit de *Update()* functie uit te laten voeren. Gezien de *refreshData()* wordt aangeroepen in de *Update()* functie wordt deze automatisch terug gebruikt.
+Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constant worden uitgevoerd om de laatste info van de sensoren op de heatmap te zetten. Dit gebeurt door een interval in te stellen van een gekozen tijd (500ms in ons geval) en dit de *Update()* functie uit te laten voeren. Gezien de *refreshData()* wordt aangeroepen in de *Update()* functie wordt deze automatisch terug gebruikt.

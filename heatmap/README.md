@@ -66,7 +66,7 @@ Een sensorobject in het global object met sensorwaarden bevat 2 dingen:
 * value: waarde die de sensor geeft bij een bepaald geluid signaal
 
 In onze *Update()* functie gaan we de data van onze sensoren invullen.
-Eerst gaan we de hele array van het gereturnde object doorlopen en kijken of we onze sensoren er uit kunnen halan afhankelijk van hun *sensorid*.
+Eerst gaan we de hele array van het gereturnde object doorlopen en kijken of we onze sensoren er uit kunnen halen afhankelijk van hun *sensorid*.
 Bij een match gaan we de waarde van de sensor eerst moeten vermenigvuldigen omdat de waarde van de sensor te klein is om direct mee te werken in ons programma. Als dit gebeurt is stellen we de waarde van de ingelezen sensor gelijk aan het matchende sensorObject dat we daarstraks hebben aangemaakt.
 Hierna pushen we sensorObject.value terug in de array zodat deze de laatst binnengehaalde data heeft.
 

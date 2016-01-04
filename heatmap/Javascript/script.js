@@ -69,7 +69,7 @@ function Refreshdata() {
         dataType: 'jsonp',
         success: function (data) {
             obj = data;
-            //console.log(obj);
+            
         }
     });
     return obj;

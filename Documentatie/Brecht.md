@@ -44,7 +44,30 @@ Als volgt moest ik de RF24 bibliotheken installeren op onze RPi 2. Ik heb dit ge
 
 Hierin wordt dus verteld hoe ik de code van alle RF24 bibliotheken op mijn RPi krijg, er bevind zich ook een map bij waarin examples voor de RPi staan. We builden de bestanden in de juiste map */home/IoT/rf24libs/RF24/examples_RPi*. En we voeren op de RPi ook de GettingStarted sketch uit. Dit werkte!
 
+> [Code Arduino](http://tmrh20.github.io/RF24/GettingStarted_8ino-example.html) </br>
+> [Code RPi2](http://tmrh20.github.io/RF24/GettingStarted_8cpp-example.html)
 
+Als volgende stap heb ik eerst RF24Network getest. De RF24Mesh bibliotheek maakt hier gebruik van, dus wouw ik eerst zeker zijn dat dit werkte. Ik test eerst helloworld_tx op Arduino en helloworld_rw op RPi2 en hierna andersom. Beide situaties werkten!
+
+> [Arduino Helloworld_tx](http://tmrh20.github.io/RF24Network/helloworld_tx_8ino-example.html)</br>
+> [Arduino Helloworld_rx](http://tmrh20.github.io/RF24Network/helloworld_rx_8ino-example.html)
+
+> [RPi Helloworld_tx](https://github.com/TMRh20/RF24Network/blob/master/examples_RPi/helloworld_rx.cpp)</br>
+> [RPi Helloworld_rx](https://github.com/TMRh20/RF24Network/blob/master/examples_RPi/helloworld_rx.cpp)
+
+Onze logische volgende stap is de examples testen voor de RF24Mesh bibliotheek. Op de Arduino zullen we de 'slave' sketch starten en op de RPi de 'master' sketch. De master node is de node die de adressen en etc. zal verdelen. Dit sketch wordt verder in deze tekst uitgelegd. Deze keer werkte het van de 1ste keer.
+
+![Het werkt](http://i.imgur.com/ovVwfA2.jpg)
+
+> [Code Arduino](http://tmrh20.github.io/RF24Mesh/RF24Mesh_Example_8ino-example.html)</br>
+> [Code RPi2](http://tmrh20.github.io/RF24Mesh/RF24Mesh_Example_Master_8cpp-example.html)
+
+Nu we dit werkend hebben, is het de bedoeling dat we ons netwerk uitbreiden. We moeten dus een extra sensor in het netwerk koppelen.
+We doen dit door de Arduino code nog eens up te loaden naar een andere Arduino met RF zender. Het enigste wat we moeten aanpassen is de NodeID, 2 keer dezelfde mag niet voorkomen in het zelfde netwerk (vgl met MAC adres). Dit werkt ook! Ons mesh netwerk is gebouwd!
+
+![Twee nodes](http://i.imgur.com/4cOcbdp.png)
+
+De laatste stappen zijn de Arduino code integreren in de sketch van de Microfoon (@Arne Schoonvliet) en de sketch van de RPi2 aanpassen naar onze noden. Dit leest u in het volgende deel!
 
 #RaspPI code 
 (RF24, Tee, Tail, ...)

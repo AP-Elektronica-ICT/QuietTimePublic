@@ -70,7 +70,86 @@ We doen dit door de Arduino code nog eens up te loaden naar een andere Arduino m
 De laatste stappen zijn de Arduino code integreren in de sketch van de Microfoon (@Arne Schoonvliet) en de sketch van de RPi2 aanpassen naar onze noden. Dit leest u in het volgende deel!
 
 #RaspPI code 
-(RF24, Tee, Tail, ...)
+
+```c
+//Include the correct libaries
+#include "RF24Mesh/RF24Mesh.h"
+#include <RF24/RF24.h>
+#include <RF24Network/RF24Network.h>
+
+//Init our RF modules, Start SPI!
+RF24 radio(RPI_V2_GPIO_P1_15, BCM2835_SPI_CS0, BCM2835_SPI_SPEED_8MHZ);
+RF24Network network(radio);
+RF24Mesh mesh(radio,network);
+
+int main(int argc, char** argv) 
+{
+	// Set the nodeID to 0 for the master node
+	mesh.setNodeID(0);
+	// Connect to the mesh
+	mesh.begin();
+	
+	while(1)
+	{
+		// Call network.update as usual to keep the network updated
+		mesh.update();
+
+		// In addition, keep the 'DHCP service' running on the master node so addresses will
+		// be assigned to the sensor nodes
+		mesh.DHCP();
+
+		// Check for incoming data from the sensors
+		while(network.available())
+		{
+			RF24NetworkHeader header;
+			network.peek(header);
+			uint32_t dat=0;
+			
+			//Check which data type we recieved
+			switch(header.type){
+				case 'M': network.read(header,&dat,sizeof(dat));
+				  //%03d => Always have 3 numbers, if not lead it with zeroes => d (decimal)
+				  //mesh.getNodeID() => Similear to ARP, gets node id from the node address
+				  //dat => Actual data in our case, the sound intensity
+					printf("%03d%u\n",mesh.getNodeID(header.from_node),dat);
+					break;
+				default:  network.read(header,0,0);
+					printf("Rcv bad type %d from 0%o\n",header.type,header.from_node);
+					break;
+			}
+
+			fflush(stdout);
+		}
+	  
+		delay(2);
+		
+	}
+	
+	return 0;
+
+}
+```
+
+De code is vrij 'self-explanatory'. We moesten een paar dinges toevoegen aan de example code en dan waren we al klaar voor wat betreft het ontvangen van de data!
+
+#### Printen van de data
+Het is de bedoeling dat later elke regel die nu op het scherm verschijnt wordt verwerkt en toonbaar is op een website. Hierdoor moesten we dus een afspraak maken hoe de data eruit ziet. We hebben gekozen voor
+
+> 123987
+
+De eerste 3 cijfers stellen de Node ID voor van de sensor. Deze zullen later gebruikt worden om te bepalen in welk lokaal de sensor stond. We moesten ervoor zorgen dat deze altijd 3 cijfers lang was. Dus 1 moest 001 worden. We hebben dit zo gedaan:
+
+> %03d
+
+De laatste 3 cijfers stellen de *sound intensity* voor. Deze waarde is dus hoe luid het is in de omgeving van de sensor. Dit is de waarde die uitgelezen wordt door de ADC van de Arduino.
+
+#### ARP!?
+Standaard werd het *node address* geprint op het scherm. Dit kun je vergelijken met het IP adress in een thuisnetwerk. Deze is immers ook door de 'DHCP service' uitgedeeld! Het probleem is dat deze dus kan veranderen. En dat mag niet één bepaalde sensor hangt in een kamer en die kamer die veranderd niet. Gelukkig is er ook een soort ARP oplossing en kunnen we gemakkelijk de *node id* te weten komen. Deze id hebben we ingesteld in de Arduino sketch op de node zelf!
+
+#### fflush(stdout)
+De bedoeling is dat we de output van ons script gaan schrijven naar een bestand. STDout is het process waarop je momenteel je programma 'bekijk', dit kan een SSH sessie zijn, een telnet sessie of gewoon lokaal via het scherm. Het is belangrijk dat we na elke keer we iets geschreven hebben, bij ons dus na de switch, we het sturen naar stdout! Zonder dit kan het zijn dat het in een buffer blijft staan! Waarom dit schadelijk is lees je bij 'Tee'.
+
+(Tee, Tail, ...)
 
 #NodeRED
 (Werking, code)

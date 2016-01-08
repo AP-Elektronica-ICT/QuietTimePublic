@@ -11,8 +11,8 @@ var obj;
 // Objecten sensoren en locaties
 sensor[0] = {
     place: 'Gang gelijkvloers',
-    x: 640,
-    y: 500,
+    x: 540,
+    y: 200,
     value: 0,
     // radius configuration on point basis
     radius: 70
@@ -20,8 +20,8 @@ sensor[0] = {
 
 sensor[1] = {
     place: 'Gang eerste verdiep',
-    x: 340,
-    y: 200,
+    x: 160,
+    y: 500,
     value: 0,
     // radius configuration on point basis
     radius: 70
@@ -46,12 +46,12 @@ function Update()
     {
         if (sensorData[s].id == 1)
         {
-            sensor[0].value = sensorData[s].sound * 10;
+            sensor[0].value = sensorData[s].sound * 7
             sensor.push(sensor[0].value);
         }
         else if (sensorData[s].id == 2)
         {
-            sensor[1].value = sensorData[s].sound * 10;
+            sensor[1].value = sensorData[s].sound *7;
             sensor.push(sensor[1].value);
         }
     }

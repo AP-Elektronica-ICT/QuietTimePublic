@@ -166,6 +166,63 @@ De bedoeling is dat we de output van ons script gaan schrijven naar een bestand.
 #NodeRED
 Node-RED zal dienen als onze backend. De bedoeling dat we hier een mini REST API maken. Indien we een url bezoeken zal de data van onze sensoren weergegeven worden als JSON object. 
 
-We zullen dus gebruik maken van de **tail** functie die hierboven uitgelegd is. Elke keer als onze textfile wijzigt zal Node Red de laatst geprint string ontvangen.
+We zullen dus gebruik maken van de **tail** functie die hierboven uitgelegd is. Elke keer als onze textfile wijzigt zal Node Red de laatst geprint string ontvangen. Dit is dus een getal van 6 cijfers (zie hierboven).
+
+Elke keer Node Red deze string ontvangt, wordt de SaveSound() functie uitgevoerd. Deze functie zorgt ervoor dat onze sensor data upgedate wordt of toegevoegd wordt. 
+
+```
+//If our array doens't exsist yet
+//Make it!
+if(context.global.data === undefined)
+{
+ context.global.data = [];
+}
+```
+
+Hier maken we onze array aan waar we onze sensoren zullen in opslaan. Deze moet uiteraard enkel aangemaakt worden indien de array nog niet gedefenieerd is.
+
+//Code to delete context.global
+//This was used while debugging code
+//Sometimes we had to reset our array!
+/*
+for (var m in context.global)
+{
+ delete context.global[m]; 
+}
+*/
+
+//Make our sensor object
+sensor = {};
+//The first 3 chars are the ID
+sensor.id = msg.payload.substring(0, 3);
+//The next 3 chars is the sound instensity
+sensor.sound = msg.payload.substring(3, 6);
+sensor.date = new Date();
+
+//Variable (bool) to check if it's a new sensor
+var newSensor = true;
+
+//For loop for updating our exsisting sensors
+//If the sensor isn't in our array
+//newSensor will stay true
+for(var s in context.global.data)
+{
+ if(context.global.data[s].id === sensor.id)
+ {
+ context.global.data[s].sound = sensor.sound;
+ context.global.data[s].date = sensor.date;
+ newSensor = false;
+ }
+}
+
+//If it's a new sensor put it inside our array!
+if (newSensor === true)
+{
+ context.global.data.push(sensor);
+}
+
+return context.global;
+```
+
 
 (Werking, code)

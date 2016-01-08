@@ -38,7 +38,8 @@ Je kunt hier duidelijk de pinnen voor SPI zien!
 
 ![Pinlayout RPi24_zelf](http://i.imgur.com/b2KCq1w.jpg)
 
-We hebben de RF24 als volgt aangesloten
+We hebben de RF24 als volgt aangesloten:
+
 | RF24       | RPI            |
 |------------|----------------|
 | PIN1: 3.3V | PIN1: 3.3V     |

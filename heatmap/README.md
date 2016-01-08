@@ -57,6 +57,19 @@ Dit wordt gedaan via de *refreshData()* functie die we gemaakt hebben.
 Deze zal een ajax call doen naar een bepaalde pagina op een site die we hebben opgezet.
 Het datatype dat we vragen is in *jsonp* gezien we hierdoor cross scripting restricties kunnen ontwijken die we normaal zouden krijgen als we een *json* formaat zouden vragen.
 
+```javascript
+function Refreshdata() {
+    $.ajax({
+        url: "http://192.168.137.144:1880/test",
+        dataType: 'jsonp',
+        success: function (data) {
+            obj = data;
+            }
+    });
+    return obj;
+}
+```
+
 Als dit succesvol gebeurd returnen we het jsonp object in een global object dat we in het project gaan gebruiken voor de sensoren in te vullen.
 
 ####Sensordata invullen
@@ -66,12 +79,44 @@ Een sensorobject in het global object met sensorwaarden bevat 2 dingen:
 * value: waarde die de sensor geeft bij een bepaald geluid signaal
 
 In onze *Update()* functie gaan we de data van onze sensoren invullen.
+```javascript
+function Update()
+{
+    var sensorData = Refreshdata();
+
+    for(var s in sensorData)
+    {
+        if (sensorData[s].id == 1)
+        {
+            sensor[0].value = sensorData[s].sound * 10;
+            sensor.push(sensor[0].value);
+        }
+        else if (sensorData[s].id == 2)
+        {
+            sensor[1].value = sensorData[s].sound * 10;
+            sensor.push(sensor[1].value);
+        }
+    }
+```
+
 Eerst gaan we de hele array van het gereturnde object doorlopen en kijken of we onze sensoren er uit kunnen halen afhankelijk van hun *sensorid*.
 Bij een match gaan we de waarde van de sensor eerst moeten vermenigvuldigen omdat de waarde van de sensor te klein is om direct mee te werken in ons programma. Als dit gebeurt is stellen we de waarde van de ingelezen sensor gelijk aan het matchende sensorObject dat we daarstraks hebben aangemaakt.
 Hierna pushen we sensorObject.value terug in de array zodat deze de laatst binnengehaalde data heeft.
 
 Uiteindelijk wanneer alle sensoren zijn uitgelezen die we hadden binnengebregen roepen we terug *heatmapinstance.setData(data)* aan om alle nieuwe waarden op de heatmap weer te geven.
+```javascript
+    heatmapInstance.setData(data);
+}
+```
 
 ####Loop
 
 Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constant worden uitgevoerd om de laatste info van de sensoren op de heatmap te zetten. Dit gebeurt door een interval in te stellen van een gekozen tijd (500ms in ons geval) en dit de *Update()* functie uit te laten voeren. Gezien de *refreshData()* wordt aangeroepen in de *Update()* functie wordt deze automatisch terug gebruikt.
+```javascript
+   setInterval(function () {
+        Update();
+    }, 500);
+}
+```
+
+

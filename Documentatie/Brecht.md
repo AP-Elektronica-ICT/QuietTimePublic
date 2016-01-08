@@ -36,7 +36,18 @@ Mijn volgende stap was om één van de Arduino's te vervangen door onze Raspberr
 
 Je kunt hier duidelijk de pinnen voor SPI zien! 
 
-**TODO Volledige PIN LAYOUT**
+![Pinlayout RPi24_zelf](http://i.imgur.com/b2KCq1w.jpg)
+
+We hebben de RF24 als volgt aangesloten
+| RF24       | RPI            |
+|------------|----------------|
+| PIN1: 3.3V | PIN1: 3.3V     |
+| PIN2: GND  | PIN6: GND      |
+| PIN5:CE    | PIN1: GPIO22   |
+| PIN7:MISO  | PIN19:MISO     |
+| PIN8:MOSI  | PIN21:MOSI     |
+| PIN9:CLK   | PIN23:CLK      |
+| PIN10:CSN  | PIN24:SPIO CS0 |
 
 Als volgende stap moest ik de RF24 bibliotheken installeren op onze RPi 2. Ik heb dit gedaan door de volgende stappen te volgen:
 

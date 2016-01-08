@@ -152,4 +152,8 @@ De bedoeling is dat we de output van ons script gaan schrijven naar een bestand.
 (Tee, Tail, ...)
 
 #NodeRED
+Node-RED zal dienen als onze backend. De bedoeling dat we hier een mini REST API maken. Indien we een url bezoeken zal de data van onze sensoren weergegeven worden als JSON object. 
+
+We zullen dus gebruik maken van de **tail** functie die hierboven uitgelegd is. Elke keer als onze textfile wijzigt zal Node Red de laatst geprint string ontvangen.
+
 (Werking, code)

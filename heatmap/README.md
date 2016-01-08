@@ -1,4 +1,4 @@
-#Heatmap uitleg
+﻿#Heatmap uitleg
 *Javascript library voor het visualiseren van heat points in bepaalde gebieden*
 
 ##HTML 
@@ -70,7 +70,7 @@ Eerst gaan we de hele array van het gereturnde object doorlopen en kijken of we 
 Bij een match gaan we de waarde van de sensor eerst moeten vermenigvuldigen omdat de waarde van de sensor te klein is om direct mee te werken in ons programma. Als dit gebeurt is stellen we de waarde van de ingelezen sensor gelijk aan het matchende sensorObject dat we daarstraks hebben aangemaakt.
 Hierna pushen we sensorObject.value terug in de array zodat deze de laatst binnengehaalde data heeft.
 
-Uiteindelijk waneer alle sensoren zijn uitgelezen die we hadden binnengebregen roepen we terug *heatmapinstance.setData(data)* aan om alle nieuwe waarden op de heatmap weer te geven.
+Uiteindelijk wanneer alle sensoren zijn uitgelezen die we hadden binnengebregen roepen we terug *heatmapinstance.setData(data)* aan om alle nieuwe waarden op de heatmap weer te geven.
 
 ####Loop
 

@@ -1,19 +1,19 @@
 ## Microfoon
-Om de hoeveelheid geluid te kunnen bepalen binnen een bepaalde ruimte moeten we een device hebben die geluid kan detecteren. We hebben ervoor gekozen om een microfoon te gebruiken die analoge data genereert afhankelijk van het geluid.
+Om de hoeveelheid geluid te kunnen bepalen binnen een bepaalde ruimte moeten we een device hebben dat geluid kan detecteren. We hebben ervoor gekozen om een microfoon te gebruiken dat analoge data genereert afhankelijk van het geluid.
 
 ### MAX4466
-We hebben ervoor gekozen om een kloon van de Adafruit Electret Microphone Amplifier - MAX4466 with Adjustable Gain te kopen bij mchobby.be. Na eerst wat tegenslag te hebben door het kopen van een microfoon waarbij we geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden. Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing. 
+We hebben ervoor gekozen om een kloon van de Adafruit Electret Microphone Amplifier - MAX4466 with Adjustable Gain te kopen bij mchobby.be . Na eerst wat tegenslag te hebben gehad door het kopen van een microfoon waarbij geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden. Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing. 
 
 #### Specificaties
-Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet the MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede  Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroom verbruik beperkt op slechts 24µA in normale omstandigheden. 
+Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede  Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroomverbruik beperkt op slechts 24ÂµA in normale omstandigheden. 
 
 #### Gebruik
-We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen de VCC (3.3V), OUT en de GND. Waar VCC en GND moet is duidelijk en de OUT hangen we aan een analoge ingang van de ADC. 
+We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen: de VCC (3.3V), OUT en de GND. Waar VCC en GND moeten is duidelijk en de OUT hangen we aan een analoge ingang van de ADC. 
 
 ![alt text](http://i.imgur.com/L9gK17x.jpg?1 "Logo Title Text 1")
 
 ### Code
-Een kort woordje uitleg over de code in verband met de microfoon. Deze code is de standalone code voor de microfoon maar word gebruikt in de eigenlijke node code. Voor uitleggen van deze code lijkt het me makkelijker om dit op deze manier te doen.
+Een kort woordje uitleg over de code in verband met de microfoon. Deze code is de standalone code voor de microfoon maar word gebruikt in de eigenlijke node code. Voor de uitleg van deze code lijkt het me makkelijker om dit op deze manier te doen.
 
 
 Eerst hebben we enkele globale variabele die we initialiseren en verder zorgen we dat we de serial initialiseren voor debug doeleinde.
@@ -28,7 +28,7 @@ void setup()
  
 ```
 
-Dan gaan we verder naar onze eigenlijk meting van de het geluid. We starten met het initialiseren van variabelen naar hun start waardes. Dan gaan we voor 50ms het geluid meten dat de microfoon opvangt. We slaan de hoogste en de laagste waarde op. Na de 50ms berekenen we de peak to peak waarde van het geluid en zetten we deze om in de eigenlijke voltages. Dit geven we weer op het debug venster. In de eigenlijke node code zal deze data verstuurd worden naar de raspberry pi.
+Dan gaan we verder naar onze eigenlijke meting van de het geluid. We starten met het initialiseren van variabelen naar hun startwaarden. Dan gaan we voor 50ms het geluid meten dat de microfoon opvangt. We slaan de hoogste en de laagste waarde op. Na de 50ms berekenen we de peak-to-peak waarde van het geluid en zetten deze om in de eigenlijke voltages. Dit geven we weer op het debug venster. In de eigenlijke node code zal deze data verstuurd worden naar de raspberry pi.
 ```c
 void loop() 
 {
@@ -66,7 +66,7 @@ void loop()
 ##### - Voordelen
 * Deze microfoon is gemakkelijk te gebruiken. Iedereen die een ADC kan uitlezen kan deze gebruiken
 * Afhankelijk waar je de microfoon koopt is deze niet prijzig
-* Er is een potentiometer op geïnstalleerd zodat je de gain van de pre amplifier kan instellen
+* Er is een potentiometer op geÃ¯nstalleerd zodat je de gain van de pre-amplifier kan instellen
 
 ##### - Nadelen
 * De sensitiviteit van de microfoon is niet optimaal

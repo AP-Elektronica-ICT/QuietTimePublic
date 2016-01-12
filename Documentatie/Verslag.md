@@ -93,8 +93,7 @@ void loop()
 ##### - Nadelen
 * De sensitiviteit van de microfoon is niet optimaal
 * Het totale bereik van de microfoon had beter gekunt
-* Het meest ideale zou zijn dat we een microfoon hadden die dB waardes zou kunnen geven. Dit zou de prijs absurd hoog brengen en we hebben er dus voor gekozen om dit niet te doen. 
-
+* Het meest ideale zou zijn dat we een microfoon hadden die dB waardes zou kunnen geven. Dit zou de prijs absurd hoog brengen en we hebben er dus voor gekozen om dit niet te doen.
  
 
 ##XBee
@@ -331,7 +330,15 @@ Elke keer als onze text file aangepast wordt zal Node Red de nieuwe lijn tekst b
 Bij deze bedanken we Dhr. Luyts nog eens voor zijn kennis van Linux, zonder hem hadden we deze commando's niet gekend. En was het project niet hetzelfde geweest!
 
 ##NodeRED
-Node-RED zal dienen als onze backend. TODO: Wat is Node Red!?
+Node-RED zal dienen als onze backend. 
+
+Node Red is een tool om gemakkelijk een IoT netwerk te bouwen. Het is bedoeld om de verschillende onderdelen van je IoT netwerk te 'verbinden' (laten communiceren) met elkaar. Het is een grafische tool dat werkt met click and drop ban bepaalde blokken. Je maakt verbindingen door lijnen te verbinden tussen blokken.
+
+De blokken hebben verschillende functies (inputs, outputs, ...). Aangezien Node Red gewoon een versimpeling is van NodeJS kun je perfect eigen Javascript code schrijven, dit kun je doet d.m.v. de functie blok bijvoorbeeld! Maar dit betekend ook dat Node Red alle duizende modules van NodeJS kan gebruiken! Node Red wordt volledig ondersteund op onze Raspberry Pi daarom moeten we geen moeilijke compatibiliteit problemen verwachten!
+
+Het is een simpele tool, en op nog geen 5 minuten kun je volledig cloud / IoT applicaties werkend hebben! Ook is Node Red redelijk goed gedocumenteerd, wat het prettig maakt om mee te werken! Er zijn ook wat debug opties wat leuk is tijdens het ontwikkelen. Het is een opensource project maar het is ontstaan door IBM, er zit dus een groot bedrijf achter met veel kennis en geld!
+
+[Website Node Red](http://nodered.org/)
 
 De bedoeling dat we hierin een mini REST API maken. Indien we een url bezoeken zal de data van onze sensoren weergegeven worden als JSON object.
 

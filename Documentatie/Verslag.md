@@ -467,11 +467,11 @@ Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constan
 ##Architectuur
 ###In werkelijk heid
 
-![Arcitectuur Werkelijkheid](/Documentatie/Foto's/Architectuur.png)
+![Arcitectuur Werkelijkheid](Architectuur.png)
 moesten we dit project in werkelijkheid gaan uit voeren. Dan zouden we per verdiep een Raspberry pi voor zien. Deze zou communiceren met Arduino sensor nodes via RF24. via het interner zou de data verstuurd worden naar een rest API. De back end zal van die data een Front end Heat map genereren. Per lokaal zou minstens een arduino geplaatst worden die met de Raspberry pi van dat verdiep communniceerd. Op de arduino's zullen microfoons en RF24 modules worden aangebracht. De arduino's fungeren als slave nodes in het mesh netwerk.
 
 
-![Arcitectuur Werkelijkheid](/Documentatie/Foto's/Architectuur2.png)
+![Arcitectuur Werkelijkheid](Architectuur2.png)
 In het labo hadden we één raspberry pi waar de Backend op runde de front end zal via internet de data ophalen. De raspberry pi communiceerde met 2 arduino's met elks een RF24 module en een microfoon.
 
 

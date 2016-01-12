@@ -115,11 +115,23 @@ De ESP8266 WiFi module is een op zichzelf staand “System on a chip” (SoC) me
 
 ##ESP8266
 
-Wat is er niet gelukt? (TODO)
+####Wat is er (niet) gelukt?
+Ons doel was om NodeMCU op de ESP8266 te flashen. Dit was custum firmware waardoor we de mogelijkheid kregen om de ESP8266 te prgrammeren in 'Lua'.
+
+[Tuturial](http://www.whatimade.today/loading-the-nodemcu-firmware-on-the-esp8266-windows-guide/)
+
+Dit lukte. De NodeMCU firmware stond geflasht op de ESP8266. We hebben dit gedaan met dezelfde tool als in de tuturial [NodeMCU flasher](https://github.com/nodemcu/nodemcu-flasher). Nu kwam echter de grote vraag, wat nu? We moeten toch ergens code kunnen invullen? In de turial stond dat we dit moesten doen via Putty. Owkay zo gezegd zo gedaan. Probleem 1 we waren nooit zeker over de baudrate... Maar we namen uiteindelijk dezelfde als de baud rate die we gebruikt hebben tijdens het flashen van de NodeMCU firmware. Maar nog steeds, wat nu? Alles dat we invullden had geen effect...
+
+Tijd om een alternatief te vinden. We vonden een *Lua Editor* waarin we dus al onze Lua code konden uitvoeren op de ESP8266. We konden dit echter niet aan de praat krijgen. Door de onduidelijke GUI en slecht gedocumenteerde site wisten we echt niet wat we verkeerd deden...
+
+We waren dit aan testen op uw NodeMCU DevBoard V1. U had nog een andere ESP8266 module (Arne heeft deze gesoldeerd). Deze zijn we dan beginnen gebruiken maar dezelfde problemen waren hier ook aanwezig. We hadden hier zelfs meer problemen bij, het flashen van de NodeMCU firmware ging hier niet zo vlot als op uwe DevBoard.
+
+Uiteindelijk heb ik een eigen ESP8266 besteld en ook een USB programmer (TTL => 3,3V). Maar kwam ik na levering eigenlijk tot de conclusie dat die nuteloos waren, ze hadden immers geen analoge aansluiting!
+
 
 Wat had het kunnen worden?
 
-##RF24 
+##RF24
 Na al onze pogingen om een draadloos netwerk te bouwen, grijpen we terug naar de basis. Dankzij opzoekwerk had ik een bibliotheek gevonden om via RF een draadloos mesh netwerk te bouwen. RF (Radiofrequent) hebben we al gebruikt tijdens het labo van IoT. We hebben toen gebruik gemaakt van de nrf24l01. We wisten sowieso dat deze modules werkten, en we hadden er ook veel op het school.
 
 Beide vorige pogingen miste één van deze kenmerken. De RF modules hadden twee groote nadelen. 

@@ -4,7 +4,7 @@
 * Bart Kerstens
 * Arne Schoonvliet
 
-## INLEIDING
+## Inleiding
 In ons derde jaar op AP Hogeschool wordt er van ons verwacht een IoT project te maken. Wij maken deze in groepjes van vier.
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
@@ -128,8 +128,24 @@ We waren dit aan testen op uw NodeMCU DevBoard V1. U had nog een andere ESP8266 
 
 Uiteindelijk heb ik een eigen ESP8266 besteld en ook een USB programmer (TTL => 3,3V). Maar kwam ik na levering eigenlijk tot de conclusie dat die nuteloos waren, ze hadden immers geen analoge aansluiting!
 
+De moed begon steeds de zakken, de tegenslagen met de draadloze communicatie waren enorm. We hebben daarom besloten om terug naar de basics van Labo 2 te gaan!
 
-Wat had het kunnen worden?
+#### Wat had het kunnen worden?
+Zoals het hier boven staat, de ESP8266 is niet zomaar een WiFi module. Het is een vollidge SoC. Er zit een microcontroller in verwerkt die meer 'power' heeft dan de ATMEGA 328 van onze Arduino UNO. Het had dus perfect mogelijk geweest om de Arduino en de Raspberry Pi gewoon te verwijderen uit ons project!
+
+We zouden de Arduino kunnen verwijderen omdat sommige varianten van de ESP8266 (Bijvoorbeeld de ESP8266-12) beschikken over een ADC. Zo zouden we niet meer moeten samplen op de Arduino, maar zou deze taak ook volbracht kunnen worden door de ESP8266. Dit heeft als voordeel dat er component minder stroom verbruikt..
+
+Met de ESP8266 hadden we via het AP wifi netwerk kunnen communiceren, deze is toch al beschikbaar waarom dan niet gebruiken (minder radiogolven in de lucht). Ook hadden we rechtstreeks 'POST' requests kunnen schrijven naar een cloud server (NodeJS, PHP, ...). We hadden ook de mogelijkheid gehad om via WiFi connectie te maken met onze microfoon (get). Zo hadden we de status kunnen vragen van de sensor en andere zaken.
+
+De opties zijn bijna oneindig, het had een mooier IoT project opgeleverd. Brecht Carlier is van plan om met zijn eigen ESP8266 eens te spelen. Het is echt een zeer interssant en hip component in de IoT wereld!
+
+#### Update
+
+> The easiest way to communicate with the ESP8266 is to open Putty, select the right COM and start writing. It will be a bit frustrating since you have to write a line and end it with CTRL-J to send it to the ESP826
+
+Dit vond ik tijdens het opmaken van dit verslag, ik heb nooit de toetsencommando CTRL+J gebruikt. Misschien was dit onze fout en werkte het gewoon. Alhoewel ik het zelf betwijfel aangezien er echt niets in het PuTTY venster verschijnt.
+
+Maar dit kan misschien een tip zijn voor de mensen van volgend jaar!
 
 ##RF24
 Na al onze pogingen om een draadloos netwerk te bouwen, grijpen we terug naar de basis. Dankzij opzoekwerk had ik een bibliotheek gevonden om via RF een draadloos mesh netwerk te bouwen. RF (Radiofrequent) hebben we al gebruikt tijdens het labo van IoT. We hebben toen gebruik gemaakt van de nrf24l01. We wisten sowieso dat deze modules werkten, en we hadden er ook veel op het school.
@@ -157,7 +173,7 @@ In het labo hebben we ineens geprobeerd de RF24Mesh te testen, dit lukte niet. T
 
 Ik had gelukkig nog een 3de RF module meegenomen naar huis en heb als eerst terug onze sketch van LABO2 geprobeerd. Dit werkte en daarna de GettingStarted sketch en na een paar aanpassingen werkte dit ook. Zo we hadden een basis waar we verder mee konden.
 
-Mijn volgende stap was om één van de Arduino's te vervangen door onze Raspberry Pi2. Allereerst moesten we de RF module verbinden met onze Raspberry Pi2, dit gaat via de 40 pins header. 
+Mijn volgende stap was om één van de Arduino's te vervangen door onze Raspberry Pi2. Allereerst moesten we de RF module verbinden met onze Raspberry Pi 2, dit gaat via de 40 pins header. 
 
 ![Pinlayout RPi24](https://ms-iot.github.io/content/images/PinMappings/RP2_Pinout.png)
 
@@ -531,6 +547,8 @@ Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constan
 
 Moesten we dit project in werkelijkheid gaan uit voeren. Dan zouden we per verdiep een Raspberry Pi voorzien. Deze zou communiceren met de Arduino sensor nodes via RF24. Via het internet zou de data verstuurd worden naar een Rest API. We zouden dus onze Node-Red moeten aanpassen dat hij geen 'get' doet maar een post. In de cloud staat er dan bijvoorbeeld een node server waar we via een REST api deze post kunnen verwerken.
 De REST API zal dan ook gets hebben waardoor we de data op de front-end kunnen visualizeren (Heat map genereren). Per lokaal zou minstens een arduino geplaatst worden die met de Raspberry Pi van dat verdiep communniceerd. Op de Arduino's zullen microfoons en RF24 modules worden aangebracht. De Arduino's fungeren als slave nodes in het sternetwerk.
+
+###Labo
 
 In de praktijk moet er dan ook gekeken worden of het verbruik van onze setup toegestaan is. De Arduino zal naar alle waarschijnlijkheid vervangen moeten worden naar een kleiner en zuiniger model. Ook moeten we dan experimenteren of we aan meshnetworking gaan doen, onze soft- en hardware ondersteund het. Zo kunnen we misschien een beter bereik tewerk stellen. Mocht dit toch niet lukken kunnen we nog altijd krachtigere RF modules proberen (met een echte antenne i.p.v. pcb antenne). Er zou ook gekeken kunnen worden om 2 microfoons te plaatsen en via het meshnetwerk data tussen de Arduino's te sturen (samenwerken).
 

@@ -11,7 +11,7 @@ Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandi
 In ons project hebben we een aantal doelstellingen. Een zeer belangrijke hiervan is het plannen en het verdelen van taken. We werken in een groep van vier. Hier moet zeker de nodige planning gebeuren willen we tot een succesvolle project komen. We leren hier bepaalde technieken voor die ons hierbij kunnen helpen!
 In ons latere leven zullen we hier ook mee te maken krijgen. We zullen ook vindingrijk moeten zijn bij het oplossen van problemen. Niet alles gaat van de eerste keer en we zullen zeker eens een probleem hebben en dat moeten we succesvol kunnen oplossen. Dit zal tevens belangrijk zijn in ons dagelijks leven. Onze werkhouding en ons gedrag binnen de groep en tegenover derden is ook een belangrijke doelstelling!
 
-Het algemeen doel van ons project is dat we in een werkelijke situatie ervaring opdoen. 
+Het algemeen doel van ons project is dat we in een werkelijke situatie ervaring opdoen.
 In dit dossier vindt u de schriftelijke neerslag van en de extra informatie van onze taken. Wij wensen jullie nog veel leesplezier in ons portfolio.
 
 Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
@@ -27,10 +27,10 @@ Om de hoeveelheid geluid te kunnen bepalen binnen een bepaalde ruimte moeten we 
 We hebben ervoor gekozen om een kloon van de Adafruit Electret Microphone Amplifier - MAX4466 with Adjustable Gain te kopen bij mchobby.be . Na eerst wat tegenslag te hebben gehad door het kopen van een microfoon waarbij geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden. Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing. 
 
 #### Specificaties
-Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede  Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroomverbruik beperkt op slechts 24µA in normale omstandigheden. 
+Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede  Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroomverbruik beperkt op slechts 24µA in normale omstandigheden.
 
 #### Gebruik
-We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen: de VCC (3.3V), OUT en de GND. Waar VCC en GND moeten is duidelijk en de OUT hangen we aan een analoge ingang van de ADC. 
+We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen: de VCC (3.3V), OUT en de GND. Waar VCC en GND moeten is duidelijk en de OUT hangen we aan een analoge ingang van de ADC.
 
 ![alt text](http://i.imgur.com/L9gK17x.jpg?1 "Logo Title Text 1")
 
@@ -50,7 +50,8 @@ void setup()
  
 ```
 
-Dan gaan we verder naar onze eigenlijke meting van de het geluid. We starten met het initialiseren van variabelen naar hun startwaarden. Dan gaan we voor 50ms het geluid meten dat de microfoon opvangt. We slaan de hoogste en de laagste waarde op. Na de 50ms berekenen we de peak-to-peak waarde van het geluid en zetten deze om in de eigenlijke voltages. Dit geven we weer op het debug venster. In de eigenlijke node code zal deze data verstuurd worden naar de raspberry pi.
+Dan gaan we verder naar onze eigenlijke meting van de het geluid. We starten met het initialiseren van variabelen naar hun startwaarden. Dan gaan we voor 50ms het geluid meten dat de microfoon opvangt. We slaan de hoogste en de laagste waarde op. Na de 50ms berekenen we de peak-to-peak waarde van het geluid en zetten deze om in de eigenlijke voltages. Dit geven we weer op het debug venster. In de eigenlijke node code zal deze data verstuurd worden naar de Raspberry Pi 2.
+
 ```c
 void loop() 
 {
@@ -97,7 +98,7 @@ void loop()
  
 
 ##XBee
-Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen zigbee gebaseerd protocol. Wat minder praktisch aan een XBee is, is de manier van programmeren. Als u dit via usb wilt doen moet u eerst de microcontroller uit de arduino halen. Als u dit niet doet zal er via USB communicatie zijn tussen de computer en de microcontroller maar geen van beide zal de Xbee module kunnen bereiken. De Xbee sluit u op de arduino aan via een schield. Op dit schield zijn 2 jumpers aanwezig plaats deze voor het programmeren van de Xbee naar USB positie.
+Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen zigbee gebaseerd protocol. Wat minder praktisch aan een XBee is, is de manier van programmeren. Als u dit via usb wilt doen moet u eerst de microcontroller uit de arduino halen. Als u dit niet doet zal er via USB communicatie zijn tussen de computer en de microcontroller maar geen van beide zal de Xbee module kunnen bereiken. De Xbee sluit u op de Arduino aan via een schield. Op dit schield zijn 2 jumpers aanwezig plaats deze voor het programmeren van de Xbee naar USB positie.
 
 ###Wat hebben we bereikt
 We hebben een succes volle p-p connectie bereik tussen 2 Xbee S1. Jammer genoeg kunnen Xbee S1 niet in een mesh samen werken. Na onderzoek bleek dat de S2 hiervoor wel geschikt waren. Nadat onze school hiervan niet in het bezit was. Kozen we voor de ESP8266. Waarom dit toch niet de oplossing bleek te zijn kan u in een apart hoofdstuk over ESP8266 lezen. RF24 modules boden ons de uiteindelijke oplossing aan.
@@ -443,7 +444,28 @@ return msg;
 
 Indien we nu surfen naar het IP adres van de RPI op poort 1880, en als route test (m.a.w. 192.168.137.144:1880/test). Zullen we onze array zien in JSON formaat! Nu kan Bart deze data gebruiken in zijn front end code.
 
-(Werking, code)
+##Raspberry Pi
+We maken dus gebruik van een Raspbeery Pi 2. Maar wat is dit nu juist?
+
+Een Raspberry Pi is een signeloboardcomputer gebaseerd op ARM processoren. Ze zijn zo bekend geworden omdat ze zo goedkoop worden verkocht. Hun doel is immers om mensen aan het ontwikkelen te brengen aan een lage kostprijs. Zo zijn er veel projecten in 3de wereld landen waar ze de RPi gebruiken.
+
+Echter heeft de RPi niet enkel aantrek bij studenten en derde wereld landen, ze worden ook volop gebruikt door tweakers. Je bent perfect instaat om van je RPi een klein goedkoop mediaservertje te maken!
+
+RPi gebruikt dus ARM processoren. Dit zijn de processoren die je vaak vind in smartphones en tablets. Je kunt er niet de standard versie van Windows op draaien (x86), daarom is het Linux ecosysteem hier de dominante positie. Er zijn veel Linux distrubuties die de RPi ondersteunen!
+
+Wij gebruiken de RPi 2, dit is het krachtigste model dat ze nu hebben. Het beschikt over een quard core Cortex A7 processor op 900Mhz. De GPU is nog steeds dezelfde als de eerdere / andere varianten. Namelijk een Broadcom VideoCore IV.
+
+Het stroomverbruik is maximaal 400/500mA wat resulteert in een vermogen van 2 à 2,5W maximaal!
+
+We hebben Raspbian Jessie Lite geïnstalleerd, dit is een minimale versie zonder GUI. We zullen gebruik maken van SSH om te werken op onze RPi. Ik heb dit gedaan door mijn Windows computer als DHCP server in te stellen. Je kunt dit makkelijk doen je WiFi (internet van het school) adapter te delen. Je computer speelt dan eigenlijk router, je lan netwerk zal hierdoor via je WiFi beschikken over internet. De apparaten op je het lan netwerk van mijn laptop zullen nu een IP adres krijgen van mijn laptop. Het ip adres van mijn ethernet adapapter zal nu altijd 192.168.137.1 zijn. De dhcp lease is een /24!
+
+Een fantastische feature van Windows, maar ze zijn iets vergeten. Je kunt namelijk niet zien welke IP adressen je least als DHCP server. We weten dus niet wat het IP adres is van onze RPi. Maar dit kunnen we makkelijk oplossen door nmap te gebruiken. Met het volgende commando scan je het volledige netwerk (192.168.137.0):
+
+> nmap -sn 192.168.137.*
+
+De -sn staat voor dat er geen port scan moet gebeuren, we hebben enkel het IP adres nodig!
+
+Vanaf we dit nu hebben, kunnen we SSH'en naar de RPi (wel eerst instellen in boot menu). Wij maakten gebruik van Bitvise SSH Client. Hier zit ook SFTP support in, zo kunnen we makkelijk files van de Windows computer slepen naar onze RPi.
 
 ##Heatmap uitleg
 *Javascript library voor het visualiseren van heat points in bepaalde gebieden*

@@ -1,11 +1,11 @@
-﻿#IoT QuiteTime
+#IoT QuietTime
 * Brecht Carlier
 * Stijn Schrauwen
 * Bart Kerstens
 * Arne Schoonvliet
 
 ## INLEIDING
-In ons derde jaar op AP Hogeschool wordt er van ons verwacht een IoT project te maken. Wij maken deze in groepjes van vier. 
+In ons derde jaar op AP Hogeschool wordt er van ons verwacht een IoT project te maken. Wij maken deze in groepjes van vier.
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
 In ons project hebben we een aantal doelstellingen. Een zeer belangrijke hiervan is het plannen en het verdelen van taken. We werken in een groep van vier. Hier moet zeker de nodige planning gebeuren willen we tot een succesvolle project komen. We leren hier bepaalde technieken voor die ons hierbij kunnen helpen!
@@ -115,7 +115,7 @@ De ESP8266 WiFi module is een op zichzelf staand “System on a chip” (SoC) me
 
 ##ESP8266
 
-Wat is er niet gelukt?
+Wat is er niet gelukt? (TODO)
 
 Wat had het kunnen worden?
 
@@ -276,17 +276,27 @@ Standaard werd het *node address* geprint op het scherm. Dit kun je vergelijken 
 ### fflush(stdout)
 De bedoeling is dat we de output van ons script gaan schrijven naar een bestand. STDout is het process waarop je momenteel je programma 'bekijk', dit kan een SSH sessie zijn, een telnet sessie of gewoon lokaal via het scherm. Het is belangrijk dat we na elke keer we iets geschreven hebben, bij ons dus na de switch, we het sturen naar stdout! Zonder dit kan het zijn dat het in een buffer blijft staan! Waarom dit schadelijk is lees je bij 'Tee'.
 
-(Tee, Tail, ...)
+### Tee
+TODO
+
+### Tail
+TODO
 
 ##NodeRED
-Node-RED zal dienen als onze backend. De bedoeling dat we hier een mini REST API maken. Indien we een url bezoeken zal de data van onze sensoren weergegeven worden als JSON object. 
+Node-RED zal dienen als onze backend. TODO: Wat is Node Red!?
+
+De bedoeling dat we hierin een mini REST API maken. Indien we een url bezoeken zal de data van onze sensoren weergegeven worden als JSON object.
 
 We zullen dus gebruik maken van de **tail** functie die hierboven uitgelegd is. Elke keer als onze textfile wijzigt zal Node Red de laatst geprint string ontvangen. Dit is dus een getal van 6 cijfers (zie hierboven).
 
-Elke keer Node Red deze string ontvangt, wordt de SaveSound() functie uitgevoerd. Deze functie zorgt ervoor dat onze sensor data upgedate wordt of toegevoegd wordt. 
+Elke keer Node Red deze string ontvangt, wordt de SaveSound() functie uitgevoerd. Deze functie zorgt ervoor dat onze sensor data upgedate wordt of toegevoegd wordt.
 
-```
-//If our array doens't exsist yet
+####SaveSound()
+
+Hier maken we onze array aan waar we onze sensoren zullen in opslaan. Deze moet uiteraard enkel aangemaakt worden indien de array nog niet gedefenieerd is. We slaan deze array globaal op zodaning ons volledig project eraan kan!
+
+```javascript
+//If our array doesn't exsist yet
 //Make it!
 if(context.global.data === undefined)
 {
@@ -294,19 +304,23 @@ if(context.global.data === undefined)
 }
 ```
 
-Hier maken we onze array aan waar we onze sensoren zullen in opslaan. Deze moet uiteraard enkel aangemaakt worden indien de array nog niet gedefenieerd is.
+Deze code dient om snel de volledige array te verwijderen, we hebben dit erin gezet omdat het wel eens makkelijk was tijdens het debuggen (code staat in commentaar zodat we snel de array kunnen 'resetten').
 
-```
+```javascript
 //Code to delete context.global
 //This was used while debugging code
 //Sometimes we had to reset our array!
 /*
 for (var m in context.global)
 {
- delete context.global[m]; 
+ delete context.global[m];
 }
 */
+```
 
+Hier maken we ons 'Sensor' object aan. De id van de sensor zijn de eerste 3 cijfers van de string die we opgeslagen hebben in onze file. Zoals u reeds weet zorgt de RPi dat de id altijd 3 karakters bevat (leading zero's toevoegen). De volgende 3 karakters komen overeen met de geluidsintensiteit gelezen door de microfoon. Deze plaatsen we ook in ons object onder de het field sound. We slaan ook de huidige datum (+ uur) op, zo kunnen we later kijken hoelang het geleden is sinds de sensor is upgedate!
+
+```javascript
 //Make our sensor object
 sensor = {};
 //The first 3 chars are the ID
@@ -314,7 +328,17 @@ sensor.id = msg.payload.substring(0, 3);
 //The next 3 chars is the sound instensity
 sensor.sound = msg.payload.substring(3, 6);
 sensor.date = new Date();
+```
 
+Volgende stap bestaat eruit de sensor toe te voegen of het bestaande sensor object up te daten. Indien het een nieuwe sensor is voegen we toe, indien hij al bestond daten we up.
+
+Standaard is er een bool (newSensor) true, indien deze true blijft weten we dat het sensor object nog niet is toegevoegd in onze array.
+
+We loopen voor we de nieuwe sensor toevoegen nog eerst over de bestaande sensoren. Mocht het blijken dat de id van de sensor al gebruikt is, dan moeten we niet toevoegen maar de bestaande sensor up daten. Onder updaten verstaan we de sound en date field aanpasen naar de nieuwe waardes. We zetten newSensor op false, deze sensor moet immers niet opnieuw toegevoegd worden!
+
+Mocht de newSensor dus nog steeds true blijken, dan voegen we de sensor toe aan onze array.
+
+```javascript
 //Variable (bool) to check if it's a new sensor
 var newSensor = true;
 
@@ -340,13 +364,36 @@ if (newSensor === true)
 return context.global;
 ```
 
+####GetTime()
+Inden we een get request doen naar de route /test zal de GetTime() functie aangeroepen worden! De functie zal onze globaal opgeslagen array returnen via http!
+
+Voor we deze returnen zullen we kijken of een sensor verwijderd moeten worden uit de array. Dit doen we indien de sensor al geruime tijd geen data meer heeft gezonden (defect).
+
+```javascript
+var now = new Date();
+
+for(var i = context.global.data.length -1; i >= 0; i--)
+{
+ //If the sensor didn't recieve new values for 60000 ms (1 minute)
+ //Remove it from the array
+ if(now.getTime() - context.global.data[i].date.getTime() > 60000)
+ {
+ context.global.data.splice(i, 1);
+ }
+}
+
+msg.payload = context.global.data;
+return msg;
+```
+
+Indien we nu surfen naar het IP adres van de RPI op poort 1880, en als route test (m.a.w. 192.168.137.144:1880/test). Zullen we onze array zien in JSON formaat! Nu kan Bart deze data gebruiken in zijn front end code.
 
 (Werking, code)
 
 ##Heatmap uitleg
 *Javascript library voor het visualiseren van heat points in bepaalde gebieden*
 
-###HTML 
+###HTML
 *Alle code die in HTML gebruikt wordt*
 
 ####div: class heatmap
@@ -381,7 +428,7 @@ Elk sensor object bevat het volgende:
 * value: number, waarde die men krijgt van de Json file
 * radius: number, grootte van de cirkel van een value
 
-#####data 
+#####Data
 *data formaat dat door de heatmap wordt aangenomen*
 
 Dit bevat twee dingen:
@@ -444,7 +491,7 @@ function Update()
     }
 ```
 
-Eerst gaan we de hele array van het gereturnde object doorlopen en kijken of we onze sensoren er uit kunnen halen afhankelijk van hun *sensorid*.
+Eerst gaan we de hele array van het gereturnde object doorlopen en kijken of we onze sensoren er uit kunnen halen afhankelijk van hun *sensorid* (lookup table).
 Bij een match gaan we de waarde van de sensor eerst moeten vermenigvuldigen omdat de waarde van de sensor te klein is om direct mee te werken in ons programma. Als dit gebeurt is stellen we de waarde van de ingelezen sensor gelijk aan het matchende sensorObject dat we daarstraks hebben aangemaakt.
 Hierna pushen we sensorObject.value terug in de array zodat deze de laatst binnengehaalde data heeft.
 

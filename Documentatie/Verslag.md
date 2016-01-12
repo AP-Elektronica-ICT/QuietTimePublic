@@ -8,8 +8,13 @@
 In ons derde jaar op AP Hogeschool wordt er van ons verwacht een IoT project te maken. Wij maken deze in groep van vier.
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
-In ons project hebben we een aantal doelstellingen. Een zeer belangrijke hiervan is het plannen en het verdelen van taken. We werken in een groep van vier. Hier moet zeker de nodige planning gebeuren willen we tot een succesvolle project komen. We leren hier bepaalde technieken voor die ons hierbij kunnen helpen!
-In ons latere leven zullen we hier ook mee te maken krijgen. We zullen ook vindingrijk moeten zijn bij het oplossen van problemen. Niet alles gaat van de eerste keer en we zullen zeker eens een probleem hebben en dat moeten we succesvol kunnen oplossen. Dit zal tevens belangrijk zijn in ons dagelijks leven. Onze werkhouding en ons gedrag binnen de groep en tegenover derden is ook een belangrijke doelstelling!
+In ons project hebben we een aantal doelstellingen. Een zeer belangrijke hiervan is het plannen en het verdelen van taken. 
+We werken in een groep van vier. Hier moet zeker de nodige planning gebeuren willen we tot een succesvolle project komen. 
+We leren hier bepaalde technieken voor die ons hierbij kunnen helpen!
+In ons latere leven zullen we hier ook mee te maken krijgen. We zullen ook vindingrijk moeten zijn bij het oplossen van problemen.
+Niet alles gaat van de eerste keer en we zullen zeker eens een probleem hebben en dat moeten we succesvol kunnen oplossen. 
+Dit zal tevens belangrijk zijn in ons dagelijks leven.
+Onze werkhouding en ons gedrag binnen de groep en tegenover derden is ook een belangrijke doelstelling!
 
 Het algemeen doel van ons project is dat we in een werkelijke situatie ervaring opdoen.
 In dit dossier vindt u de schriftelijke neerslag van en de extra informatie van onze taken. Wij wensen jullie nog veel leesplezier in ons portfolio.
@@ -27,18 +32,24 @@ Ons project heeft de naam **Quiet Time** gekregen.
 Om de hoeveelheid geluid te kunnen bepalen binnen een bepaalde ruimte moeten we een device hebben dat geluid kan detecteren. We hebben ervoor gekozen om een microfoon te gebruiken dat analoge data genereert afhankelijk van het geluid.
 
 ### MAX4466
-We hebben ervoor gekozen om een Electret Microphone Amplifier - MAX4466 with Adjustable Gain te kopen bij [mchobby.be](http://shop.mchobby.be/breakout/196-micro-electret-amplifier-max4466-avec-gain-reglable-3232100001961.html). Na eerst wat tegenslag te hebben gehad door het kopen van een microfoon waarbij geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden. Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing.
+We hebben ervoor gekozen om een *Electret Microphone Amplifier - MAX4466 with Adjustable Gain* te kopen bij [mchobby.be](http://shop.mchobby.be/breakout/196-micro-electret-amplifier-max4466-avec-gain-reglable-3232100001961.html). 
+Na eerst wat tegenslag te hebben gehad door het kopen van een microfoon waarbij geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden.
+Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing.
 
 #### Specificaties
-Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroomverbruik beperkt op slechts 24µA in normale omstandigheden.
+Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466.
+Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). 
+Verder is het stroomverbruik beperkt op slechts 24µA in normale omstandigheden.
 
 #### Gebruik
-We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen: de VCC (3.3V), OUT en de GND. Waar VCC en GND moeten is duidelijk en de OUT hangen we aan een analoge ingang van de ADC.
+We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. 
+Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen: de VCC (3.3V), OUT en de GND. Waar de VCC en de GND moeten is duidelijk en de OUT hangen we aan een analoge ingang van de ADC.
 
 ![Foto Microfoon](http://i.imgur.com/L9gK17x.jpg?1 "Logo Title Text 1")
 
 ### Code
-Een kort woordje uitleg over de code in verband met de microfoon. Deze code is de standalone code voor de microfoon maar wordt gebruikt in de eigenlijke node code. Voor de uitleg van deze code lijkt het me makkelijker om dit op deze manier te doen.
+Een kort woordje uitleg over de code in verband met de microfoon. Deze code is de standalone code voor de microfoon maar wordt gebruikt in de eigenlijke node code. 
+Voor de uitleg van deze code lijkt het me makkelijker om dit op deze manier te doen.
 
 Eerst hebben we enkele globale variabele die we initialiseren en verder zorgen we dat we de serial initialiseren voor debug doeleinde.
 
@@ -53,7 +64,10 @@ void setup()
  
 ```
 
-Dan gaan we verder naar onze eigenlijke meting van de het geluid. We starten met het initialiseren van variabelen naar hun startwaarden. Dan gaan we voor 50ms het geluid meten dat de microfoon opvangt. We slaan de hoogste en de laagste waarde op. Na de 50ms berekenen we de peak-to-peak waarde van het geluid en zetten deze om in de eigenlijke voltages. Dit geven we weer op het debug venster. In de eigenlijke node code zal deze data verstuurd worden naar de Raspberry Pi 2.
+Dan gaan we verder naar onze eigenlijke meting van de het geluid. We starten met het initialiseren van variabelen naar hun startwaarden. 
+Dan gaan we voor 50ms het geluid meten dat de microfoon opvangt. We slaan de hoogste en de laagste waarde op.
+Na de 50ms berekenen we de peak-to-peak waarde van het geluid en zetten deze om in de eigenlijke voltages. 
+Dit geven we weer op het debug venster. In de eigenlijke node code zal deze data verstuurd worden naar de Raspberry Pi 2.
 
 ```c
 void loop() 
@@ -100,23 +114,43 @@ void loop()
 * Het meest ideale zou zijn dat we een microfoon hadden die dB waardes zou kunnen geven. Dit zou de prijs absurd hoog brengen en we hebben er dus voor gekozen om dit niet te doen.
 
 ##XBee
-Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen Zigbee gebaseerd protocol.
+Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. 
+Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. 
+Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen Zigbee gebaseerd protocol.
 
-Wat minder praktisch aan een XBee is, is de manier van programmeren. Als u dit via usb wilt doen moet u eerst de microcontroller uit de Arduino halen. Als u dit niet doet zal er via USB communicatie zijn tussen de computer en de microcontroller maar geen van beide zal de Xbee module kunnen bereiken. De Xbee sluit u op de Arduino aan via een schield. Op dit schield zijn 2 jumpers aanwezig plaats deze voor het programmeren van de Xbee naar USB positie.
+Wat minder praktisch aan een XBee is, is de manier van programmeren. Als u dit via usb wilt doen moet u eerst de microcontroller uit de Arduino halen. 
+Als u dit niet doet zal er via USB communicatie zijn tussen de computer en de microcontroller maar geen van beide zal de Xbee module kunnen bereiken. 
+De Xbee sluit u op de Arduino aan via een schield. Op dit schield zijn 2 jumpers aanwezig plaats deze voor het programmeren van de Xbee naar USB positie.
 
 Het kan makkelijker d.m.v. de Xbee USB adapter. Dan heb je enkel je Xbee module nodig en een usb kabel. Echter zijn deze best prijzig!
 
 ###Wat hebben we bereikt
 We hebben een succesvolle p-p connectie bereikt tussen 2 Xbee S1. Jammer genoeg kunnen Xbee S1 niet in een mesh samen werken.
 
-Na onderzoek bleek dat de S2 hiervoor wel geschikt waren. We hebben dit ontdenkt toen we aan het proberen waren om onze Xbee standalone (zonder Arduino) analoog te laten samplen.
-Onze school was niet in het bezig van S2 modules, ze waren ook te duur om ze zelf te kopen (of te lang onderweg). Hierna hebben we gekozen voor de ESP8266. Waarom dit toch niet de oplossing bleek te zijn kan u in een apart hoofdstuk over ESP8266 lezen. RF24 modules boden ons de uiteindelijke oplossing aan.
+Na onderzoek bleek dat de S2 hiervoor wel geschikt waren. 
+We hebben dit ontdenkt toen we aan het proberen waren om onze Xbee standalone (zonder Arduino) analoog te laten samplen.
+Onze school was niet in het bezig van S2 modules, ze waren ook te duur om ze zelf te kopen (of te lang onderweg). 
+Hierna hebben we gekozen voor de ESP8266. 
+Waarom dit toch niet de oplossing bleek te zijn kan u in een apart hoofdstuk over ESP8266 lezen.
+RF24 modules boden ons de uiteindelijke oplossing aan.
 
 ###Het verschil tussen XBee S1 en S2
-Om te beginnen is een groot verschil tussen de 2 dat de S1 modules niet geconfigureerd kunnen worden, waar de S2 modules eerst geconfigureerd moeten worden. Dit maakt de S1 modules makkelijk in gebruik zijn. Maar de toepassingen zijn beperkt tot point to point communicatie. Dit kan je ook met S2 modules maar S1 modules kunnen dit zonder enige configuratie. De S2 modules kunnen zowel in transparante modus werken als met API commando’s. Dit hangt af van de firmware die je gebruikt om de XBee’s mee te configureren. Werkend in de transparante modus werken de modules als seriële lijn vervanger. Alle UART data ontvangen op de Din wordt opgeslagen voor RF transmissie. Wanneer RF-data ontvangen wordt zal de opgeslagen data worden verzonden door de Dout pin. De module configuratie parameters worden geconfigureerd met de AT command mode interface. API bediening is een alternatief voor transparante werking. Het frame- gebaseerde API breidt de mate waarin een host- toepassing kan communiceren met de netwerkmogelijkheden van de module Uit.
+Om te beginnen is een groot verschil tussen de 2 dat de S1 modules niet geconfigureerd kunnen worden, waar de S2 modules eerst geconfigureerd moeten worden. 
+Dit maakt de S1 modules makkelijk in gebruik zijn. Maar de toepassingen zijn beperkt tot point to point communicatie. 
+Dit kan je ook met S2 modules maar S1 modules kunnen dit zonder enige configuratie. 
+De S2 modules kunnen zowel in transparante modus werken als met API commando’s. 
+Dit hangt af van de firmware die je gebruikt om de XBee’s mee te configureren. 
+Werkend in de transparante modus werken de modules als seriële lijn vervanger. 
+Alle UART data ontvangen op de Din wordt opgeslagen voor RF transmissie. 
+Wanneer RF-data ontvangen wordt zal de opgeslagen data worden verzonden door de Dout pin.
+De module configuratie parameters worden geconfigureerd met de AT command mode interface.
+API bediening is een alternatief voor transparante werking. 
+Het frame- gebaseerde API breidt de mate waarin een host- toepassing kan communiceren met de netwerkmogelijkheden van de module Uit.
 
 In API-modus zijn alle gegevens binnenkomend en uitgaand, opgenomen in frames die handelingen of gebeurtenissen binnen de module definiëren.
-Een groot voordeel van de S2 modules tegen over de S1 modules, is de mogelijkheid tot het werken binnen een mesh netwerk. Je kan de S1 series onderscheiden van de S2 series door naar een opschrift op de module te zoeken. Is er geen spoor van een  opschrift dat wijst op de serie, Dan heb je te maken met een S1 in geval van een S2 zal dit op de module staan. S1 en S2 modules zijn onmogelijk compatibel.
+Een groot voordeel van de S2 modules tegen over de S1 modules, is de mogelijkheid tot het werken binnen een mesh netwerk. 
+Je kan de S1 series onderscheiden van de S2 series door naar een opschrift op de module te zoeken. 
+Is er geen spoor van een  opschrift dat wijst op de serie, dan heb je te maken met een S1 in geval van een S2 zal dit op de module staan. S1 en S2 modules zijn onmogelijk compatibel.
 
 ###Verschil 802.15.4 en Zigbee
 802.15.4 is een standaard opgesteld door IEEE, momenteel misschien de grootste standaard voor kleine data pakketjes WPANs (wireless personal area network). Er zijn vele sub categorieën. De standaard wordt veelal gebruikt bij het monitoren en besturen van applicaties met kleine data trafiek, een lange levensduur en een laag stroomverbruik. De 802.15.4 standaard gebruikt enkel de 2 onderste lagen van het osi model. Namelijk de fysische en de data link laag(Mac).  Buiten deze 2 lagen gebruikt 802.15.4 enkel nog logical link control (LLC) en service specific convergence sub-layer (SSCS) om te communiceren met alle hogere lagen zoals aanvullende standaarden (zoals zigbee) bepalen. De standaard is dus ontworpen om als basis te dienen voor andere protocollen en functies. De meest bekende uitbreiding op 802.15.4 is dus ZigBee. Een standaard van de ZigBee alliantie. ZigBee gebruikt lagen 3 en hoger van het OSI model. Hier zullen zaken als authenticatie, encryptie en data routering voor het gebruik van een mesh netwerk mogelijk zijn.
@@ -238,7 +272,7 @@ De laatste stappen zijn de Arduino code integreren in de sketch van de Microfoon
 ##Arduino code
 Deze vindt u apart in onze repo. Het enigste wat aangepast moest worden t.o.v. de example file was het verwijderen van het ontvangen van data. En het veranderen van de naam van die variable die door gezonden wordt.
 
-Ik raad u aan de code te bekjken, deze wordt volledig uitgelegd a.d.h.v. commentaar
+Ik raad u aan de code te bekjken, deze wordt volledig uitgelegd a.d.h.v. commentaar. De code staat er twee keer in. Omdat wij twee nodes hadden. De Node ID (vgl met MAC adres) moet immers verschillend zijn op beide nodes. De rest van de code (logica) is perfect dezelfde.
 
 ##RaspPI code 
 
@@ -279,10 +313,10 @@ int main(int argc, char** argv)
 			//Check which data type we recieved
 			switch(header.type){
 				case 'M': network.read(header,&dat,sizeof(dat));
-				  //%03d => Always have 3 numbers, if not lead it with zeroes => d (decimal)
-				  //mesh.getNodeID() => Similear to ARP, gets node id from the node address
-				  //dat => Actual data in our case, the sound intensity
-					printf("%03d%u\n",mesh.getNodeID(header.from_node),dat);
+					//%03d => Always have 3 numbers, if not lead it with zeroes => d (decimal) => u (unsigned integer)
+					//mesh.getNodeID() => Similear to ARP, gets node id from the node address
+					//dat => Actual data in our case, the sound intensity
+					printf("%03d%03u\n",mesh.getNodeID(header.from_node),dat);
 					break;
 				default:  network.read(header,0,0);
 					printf("Rcv bad type %d from 0%o\n",header.type,header.from_node);
@@ -312,7 +346,7 @@ De eerste 3 cijfers stellen de Node ID voor van de sensor. Deze zullen later geb
 
 > %03d
 
-De laatste 3 cijfers stellen de *sound intensity* voor. Deze waarde is dus hoe luid het is in de omgeving van de sensor. Dit is de waarde die uitgelezen wordt door de ADC van de Arduino.
+De laatste 3 cijfers stellen de *sound intensity* voor. Deze waarde is dus hoe luid het is in de omgeving van de sensor. Dit is de waarde die uitgelezen wordt door de ADC van de Arduino. We zorgen ook hier dat deze waarde steeds bestaat uit 3 cijfers! Waarom dit eigenlijk moet leest u in de tekst over Node-Red.
 
 ### ARP!?
 Standaard werd het *node address* geprint op het scherm. Dit kun je vergelijken met het IP adress in een thuisnetwerk. Deze is immers ook door de 'DHCP service' uitgedeeld! Het probleem is dat deze dus kan veranderen. En dat mag niet één bepaalde sensor hangt in een kamer en die kamer die veranderd niet. Gelukkig is er ook een soort ARP oplossing en kunnen we gemakkelijk de *node id* te weten komen. Deze id hebben we ingesteld in de Arduino sketch op de node zelf!
@@ -335,7 +369,9 @@ Je zult het 'grep' commnado direct uitvoeren op de output van het 'cat' commando
 
 Je snapt nu ook dat fflush(stdout) belangrijk is, zonder dat ons C++ zijn output niet schrijft naar stdout. Kun je met 'tee' niet veel doen!
 
-Het gebruikte commando bij ons was dus: TODO
+Het gebruikte commando bij ons was dus: 
+
+> ./RF24Mesh_Example_Master | tee /home/pi/iotdata
 
 ### Tail
 Dit is ook een concept die enkel in de Linux wereld bekend is. Onze Node-Red server zal de 'Tail' functie uitvoeren op de file die ons 'Tee' commando gegenereerd heeft. Maar wat is dit nu?
@@ -460,16 +496,22 @@ return msg;
 
 Indien we nu surfen naar het IP adres van de RPI op poort 1880, en als route test (m.a.w. 192.168.137.144:1880/test). Zullen we onze array zien in JSON formaat! Nu kan Bart deze data gebruiken in zijn front end code.
 
+We hebben de code geëxporeerd naar een tekst file zodanig we het volledige Node-Red programma terug kunnen open doen. 
+Dit kan handig zijn om op een ander systeem verder te werken, of voor de zekerheid (wij hebben het al meerdere malen nodig gehad). Deze bevind zich in onze repo in de map NodeRed.
+
 ##Raspberry Pi
 We maken dus gebruik van een Raspbeery Pi 2. Maar wat is dit nu juist?
 
-Een Raspberry Pi is een signeloboardcomputer gebaseerd op ARM processoren. Ze zijn zo bekend geworden omdat ze zo goedkoop worden verkocht. Hun doel is immers om mensen aan het ontwikkelen te brengen aan een lage kostprijs. Zo zijn er veel projecten in 3de wereld landen waar ze de RPi gebruiken.
+Een Raspberry Pi is een signeloboardcomputer gebaseerd op ARM processoren. Ze zijn zo bekend geworden omdat ze zo goedkoop worden verkocht. 
+Hun doel is immers om mensen aan het ontwikkelen te brengen aan een lage kostprijs. Zo zijn er veel projecten in 3de wereld landen waar ze de RPi gebruiken.
 
 Echter heeft de RPi niet enkel aantrek bij studenten en derde wereld landen, ze worden ook volop gebruikt door tweakers. Je bent perfect instaat om van je RPi een klein goedkoop mediaservertje te maken!
 
-RPi gebruikt dus ARM processoren. Dit zijn de processoren die je vaak vind in smartphones en tablets. Je kunt er niet de standard versie van Windows op draaien (x86), daarom is het Linux ecosysteem hier de dominante positie. Er zijn veel Linux distrubuties die de RPi ondersteunen!
+RPi gebruikt dus ARM processoren. Dit zijn de processoren die je vaak vind in smartphones en tablets. Je kunt er niet de standard versie van Windows op draaien (x86), daarom is het Linux ecosysteem hier de dominante positie. 
+Er zijn veel Linux distrubuties die de RPi ondersteunen!
 
-Wij gebruiken de RPi 2, dit is het krachtigste model dat ze nu hebben. Het beschikt over een quard core Cortex A7 processor op 900Mhz. De GPU is nog steeds dezelfde als de eerdere / andere varianten. Namelijk een Broadcom VideoCore IV.
+Wij gebruiken de RPi 2, dit is het krachtigste model dat ze nu hebben. Het beschikt over een quard core Cortex A7 processor op 900Mhz.
+De GPU is nog steeds dezelfde als de eerdere / andere varianten. Namelijk een Broadcom VideoCore IV.
 
 Het stroomverbruik is maximaal 400/500mA wat resulteert in een vermogen van 2 à 2,5W maximaal!
 

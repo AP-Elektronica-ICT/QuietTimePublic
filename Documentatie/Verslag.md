@@ -302,13 +302,33 @@ De laatste 3 cijfers stellen de *sound intensity* voor. Deze waarde is dus hoe l
 Standaard werd het *node address* geprint op het scherm. Dit kun je vergelijken met het IP adress in een thuisnetwerk. Deze is immers ook door de 'DHCP service' uitgedeeld! Het probleem is dat deze dus kan veranderen. En dat mag niet één bepaalde sensor hangt in een kamer en die kamer die veranderd niet. Gelukkig is er ook een soort ARP oplossing en kunnen we gemakkelijk de *node id* te weten komen. Deze id hebben we ingesteld in de Arduino sketch op de node zelf!
 
 ### fflush(stdout)
-De bedoeling is dat we de output van ons script gaan schrijven naar een bestand. STDout is het process waarop je momenteel je programma 'bekijk', dit kan een SSH sessie zijn, een telnet sessie of gewoon lokaal via het scherm. Het is belangrijk dat we na elke keer we iets geschreven hebben, bij ons dus na de switch, we het sturen naar stdout! Zonder dit kan het zijn dat het in een buffer blijft staan! Waarom dit schadelijk is lees je bij 'Tee'.
+De bedoeling is dat we de output van ons script gaan schrijven naar een bestand. STDout is het process waarop je momenteel je programma 'bekijkT', dit kan een SSH sessie zijn, een telnet sessie of gewoon lokaal via het scherm. Het is belangrijk dat we na elke keer we iets geschreven hebben, bij ons dus na de switch, we het sturen naar stdout! Zonder dit kan het zijn dat het in een buffer blijft staan! Waarom dit schadelijk is lees je bij 'Tee'.
 
 ### Tee
-TODO
+'Tee' is een functie in Linux waarbij je de output van je executable (script, programma, ...) kunt schrijven naar een file. Hoe doet 'Tee' dit?
+
+> ls -l | **tee** output.txt
+
+ls -l is ons programma dat schrijft naar stdout (zie uitleg hierboven). Tee "vangt" deze uitgang en zal deze schrijven naar de file *output.txt*. Indien gewenst kan dit ook nog verder gestuurd worden naar een stdin (input). De file wordt trouwens elke keer overschreden!
+
+'|' is trouwens het 'pipe' symbool. Piping is een belangrijk concept in de Linux wereld. Piping is eigenlijk het doorsturen van data. Je vangt de output van een bepaald commando en stuurt het ineens door naar de input van een ander commando! En makkelijk voorbeeld is:
+
+> \# cat /proc/cpuinfo | grep -i 'Model'.
+
+Je zult het 'grep' commnado direct uitvoeren op de output van het 'cat' commando! Dit laat trouwens de modelnaam van je CPU zien!
+
+Je snapt nu ook dat fflush(stdout) belangrijk is, zonder dat ons C++ zijn output niet schrijft naar stdout. Kun je met 'tee' niet veel doen!
+
+Het gebruikte commando bij ons was dus: TODO
 
 ### Tail
-TODO
+Dit is ook een concept die enkel in de Linux wereld bekend is. Onze Node-Red server zal de 'Tail' functie uitvoeren op de file die ons 'Tee' commando gegenereerd heeft. Maar wat is dit nu?
+
+'Tail' is een zeer simpel maar toch een krachting commando. Het zorgt immers dat elke aanpassing aan een file binnenkomt. Het wordt vaak gebruikt om de log files van server te bekijken. Je wilt vaak niet de volledige error log van het verleden bekijken, maar enkel de toegevoegde lijnen terwijl jij er aan bezig bent!
+
+Elke keer als onze text file aangepast wordt zal Node Red de nieuwe lijn tekst binnen krijgen! Perfect wat we nodig hebben!
+
+Bij deze bedanken we Dhr. Luyts nog eens voor zijn kennis van Linux, zonder hem hadden we deze commando's niet gekend. En was het project niet hetzelfde geweest!
 
 ##NodeRED
 Node-RED zal dienen als onze backend. TODO: Wat is Node Red!?

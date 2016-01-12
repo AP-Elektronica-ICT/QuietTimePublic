@@ -113,7 +113,7 @@ void loop()
 * Het totale bereik van de microfoon had beter gekunt
 * Het meest ideale zou zijn dat we een microfoon hadden die dB waardes zou kunnen geven. Dit zou de prijs absurd hoog brengen en we hebben er dus voor gekozen om dit niet te doen.
 
-##XBee
+## XBee
 Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. 
 Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. 
 Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen Zigbee gebaseerd protocol.
@@ -124,7 +124,7 @@ De Xbee sluit u op de Arduino aan via een schield. Op dit schield zijn 2 jumpers
 
 Het kan makkelijker d.m.v. de Xbee USB adapter. Dan heb je enkel je Xbee module nodig en een usb kabel. Echter zijn deze best prijzig!
 
-###Wat hebben we bereikt
+### Wat hebben we bereikt
 We hebben een succesvolle p-p connectie bereikt tussen 2 Xbee S1. Jammer genoeg kunnen Xbee S1 niet in een mesh samen werken.
 
 Na onderzoek bleek dat de S2 hiervoor wel geschikt waren. 
@@ -134,7 +134,7 @@ Hierna hebben we gekozen voor de ESP8266.
 Waarom dit toch niet de oplossing bleek te zijn kan u in een apart hoofdstuk over ESP8266 lezen.
 RF24 modules boden ons de uiteindelijke oplossing aan.
 
-###Het verschil tussen XBee S1 en S2
+### Het verschil tussen XBee S1 en S2
 Om te beginnen is een groot verschil tussen de 2 dat de S1 modules niet geconfigureerd kunnen worden, waar de S2 modules eerst geconfigureerd moeten worden. 
 Dit maakt de S1 modules makkelijk in gebruik zijn. Maar de toepassingen zijn beperkt tot point to point communicatie. 
 Dit kan je ook met S2 modules maar S1 modules kunnen dit zonder enige configuratie. 
@@ -152,15 +152,15 @@ Een groot voordeel van de S2 modules tegen over de S1 modules, is de mogelijkhei
 Je kan de S1 series onderscheiden van de S2 series door naar een opschrift op de module te zoeken. 
 Is er geen spoor van een  opschrift dat wijst op de serie, dan heb je te maken met een S1 in geval van een S2 zal dit op de module staan. S1 en S2 modules zijn onmogelijk compatibel.
 
-###Verschil 802.15.4 en Zigbee
+### Verschil 802.15.4 en Zigbee
 802.15.4 is een standaard opgesteld door IEEE, momenteel misschien de grootste standaard voor kleine data pakketjes WPANs (wireless personal area network). Er zijn vele sub categorieën. De standaard wordt veelal gebruikt bij het monitoren en besturen van applicaties met kleine data trafiek, een lange levensduur en een laag stroomverbruik. De 802.15.4 standaard gebruikt enkel de 2 onderste lagen van het osi model. Namelijk de fysische en de data link laag(Mac).  Buiten deze 2 lagen gebruikt 802.15.4 enkel nog logical link control (LLC) en service specific convergence sub-layer (SSCS) om te communiceren met alle hogere lagen zoals aanvullende standaarden (zoals zigbee) bepalen. De standaard is dus ontworpen om als basis te dienen voor andere protocollen en functies. De meest bekende uitbreiding op 802.15.4 is dus ZigBee. Een standaard van de ZigBee alliantie. ZigBee gebruikt lagen 3 en hoger van het OSI model. Hier zullen zaken als authenticatie, encryptie en data routering voor het gebruik van een mesh netwerk mogelijk zijn.
 
-##WiFi Module - ESP8266
+## WiFi Module - ESP8266
 De ESP8266 WiFi module is een op zichzelf staand “System on a chip” (SoC) met geïntegreerde TCP / IP-protocol stack. De ESP8266 kan zowel connecteren naar een wifi netwerk, als er zelf een hosten. Elke ESP8266 module komt voorgeprogrammeerd met een AT commando set firmware, m.a.w. u kunt hem aansluiten aan je Arduino en je hebt dezelfde functionaliteit die een  wifischield zou bieden. Het mooie aan deze module is dat ze krachtig genoeg is om intern processen uit te voeren en data op te slaan. Het is mogelijk om aan deze module sensoren aan te sluiten zonder een arduino en een arduinoprogramma rechtstreeks in de module up te loaden. Verder heeft hij een zelf kalibrerende RF-module zodat geen externe RF onderdelen nodig zijn.
 
-##ESP8266
+## ESP8266
 
-####Wat is er (niet) gelukt?
+#### Wat is er (niet) gelukt?
 Ons doel was om NodeMCU op de ESP8266 te flashen. Dit was custum firmware waardoor we de mogelijkheid kregen om de ESP8266 te prgrammeren in 'Lua'.
 
 [Tuturial](http://www.whatimade.today/loading-the-nodemcu-firmware-on-the-esp8266-windows-guide/)
@@ -192,7 +192,7 @@ Dit vond ik tijdens het opmaken van dit verslag, ik heb nooit de toetsencommando
 
 Maar dit kan misschien een tip zijn voor de mensen van volgend jaar!
 
-##RF24
+## RF24
 Na al onze pogingen om een draadloos netwerk te bouwen, grijpen we terug naar de basis. Dankzij opzoekwerk had ik een bibliotheek gevonden om via RF een draadloos mesh netwerk te bouwen. RF (Radiofrequent) hebben we al gebruikt tijdens het labo van IoT. We hebben toen gebruik gemaakt van de nrf24l01. We wisten sowieso dat deze modules werkten, en we hadden er ook veel op het school.
 
 Beide vorige pogingen miste één van deze kenmerken. De RF modules hadden twee groote nadelen. 
@@ -244,22 +244,27 @@ Als volgende stap moest ik de RF24 bibliotheken installeren op onze RPi 2. Ik he
 
 Hierin wordt dus verteld hoe ik de code van alle RF24 bibliotheken op mijn RPi krijg, er bevind zich ook een map bij waarin examples voor de RPi staan. We builden de bestanden in de juiste map */home/IoT/rf24libs/RF24/examples_RPi*. En we voeren op de RPi ook de GettingStarted sketch uit. Dit werkte!
 
-> [Code Arduino](http://tmrh20.github.io/RF24/GettingStarted_8ino-example.html) </br>
+> [Code Arduino](http://tmrh20.github.io/RF24/GettingStarted_8ino-example.html)
+
 > [Code RPi2](http://tmrh20.github.io/RF24/GettingStarted_8cpp-example.html)
 
 Als volgende stap heb ik eerst RF24Network getest. De RF24Mesh bibliotheek maakt hier gebruik van, dus wou ik eerst zeker zijn dat dit werkte. Ik test eerst helloworld_tx op Arduino en helloworld_rw op RPi2 en hierna andersom. Beide situaties werkten!
 
-> [Arduino Helloworld_tx](http://tmrh20.github.io/RF24Network/helloworld_tx_8ino-example.html)</br>
+> [Arduino Helloworld_tx](http://tmrh20.github.io/RF24Network/helloworld_tx_8ino-example.html)
+
 > [Arduino Helloworld_rx](http://tmrh20.github.io/RF24Network/helloworld_rx_8ino-example.html)
 
-> [RPi Helloworld_tx](https://github.com/TMRh20/RF24Network/blob/master/examples_RPi/helloworld_rx.cpp)</br>
+
+> [RPi Helloworld_tx](https://github.com/TMRh20/RF24Network/blob/master/examples_RPi/helloworld_rx.cpp)
+
 > [RPi Helloworld_rx](https://github.com/TMRh20/RF24Network/blob/master/examples_RPi/helloworld_rx.cpp)
 
 Onze logische volgende stap is de examples testen voor de RF24Mesh bibliotheek. Op de Arduino zullen we de 'slave' sketch starten en op de RPi de 'master' sketch. De master node is de node die de adressen en etc. zal verdelen. Deze sketch wordt verder in deze tekst uitgelegd. Deze keer werkte het van de 1ste keer.
 
 ![Het werkt](http://i.imgur.com/ovVwfA2.jpg)
 
-> [Code Arduino](http://tmrh20.github.io/RF24Mesh/RF24Mesh_Example_8ino-example.html)</br>
+> [Code Arduino](http://tmrh20.github.io/RF24Mesh/RF24Mesh_Example_8ino-example.html)
+
 > [Code RPi2](http://tmrh20.github.io/RF24Mesh/RF24Mesh_Example_Master_8cpp-example.html)
 
 Nu we dit werkend hebben, is het de bedoeling dat we ons netwerk uitbreiden. We moeten dus een extra sensor in het netwerk koppelen.
@@ -269,12 +274,12 @@ We doen dit door de Arduino code nog eens up te loaden naar een andere Arduino m
 
 De laatste stappen zijn de Arduino code integreren in de sketch van de Microfoon (@Arne Schoonvliet) en de sketch van de RPi2 aanpassen naar onze noden. Dit leest u in het volgende deel!
 
-##Arduino code
+## Arduino code
 Deze vindt u apart in onze repo. Het enigste wat aangepast moest worden t.o.v. de example file was het verwijderen van het ontvangen van data. En het veranderen van de naam van die variable die door gezonden wordt.
 
 Ik raad u aan de code te bekjken, deze wordt volledig uitgelegd a.d.h.v. commentaar. De code staat er twee keer in. Omdat wij twee nodes hadden. De Node ID (vgl met MAC adres) moet immers verschillend zijn op beide nodes. De rest van de code (logica) is perfect dezelfde.
 
-##RaspPI code 
+## RaspPI code 
 
 ```c
 //Include the correct libaries
@@ -382,7 +387,7 @@ Elke keer als onze text file aangepast wordt zal Node Red de nieuwe lijn tekst b
 
 Bij deze bedanken we Dhr. Luyts nog eens voor zijn kennis van Linux, zonder hem hadden we deze commando's niet gekend. En was het project niet hetzelfde geweest!
 
-##NodeRED
+## NodeRED
 Node-RED zal dienen als onze backend.
 
 Node Red is een tool om gemakkelijk een IoT netwerk te bouwen. Het is bedoeld om de verschillende onderdelen van je IoT netwerk te 'verbinden' (laten communiceren) met elkaar. Het is een grafische tool dat werkt met click and drop ban bepaalde blokken. Je maakt verbindingen door lijnen te verbinden tussen blokken.
@@ -399,7 +404,7 @@ We zullen dus gebruik maken van de **tail** functie die hierboven uitgelegd is. 
 
 Elke keer Node Red deze string ontvangt, wordt de SaveSound() functie uitgevoerd. Deze functie zorgt ervoor dat onze sensor data upgedate wordt of toegevoegd wordt.
 
-####SaveSound()
+#### SaveSound()
 
 Hier maken we onze array aan waar we onze sensoren zullen in opslaan. Deze moet uiteraard enkel aangemaakt worden indien de array nog niet gedefenieerd is. We slaan deze array globaal op zodaning ons volledig project eraan kan!
 
@@ -472,7 +477,7 @@ if (newSensor === true)
 return context.global;
 ```
 
-####GetTime()
+#### GetTime()
 Inden we een get request doen naar de route /test zal de GetTime() functie aangeroepen worden! De functie zal onze globaal opgeslagen array returnen via http!
 
 Voor we deze returnen zullen we kijken of een sensor verwijderd moeten worden uit de array. Dit doen we indien de sensor al geruime tijd geen data meer heeft gezonden (defect).
@@ -499,7 +504,7 @@ Indien we nu surfen naar het IP adres van de RPI op poort 1880, en als route tes
 We hebben de code geëxporeerd naar een tekst file zodanig we het volledige Node-Red programma terug kunnen open doen. 
 Dit kan handig zijn om op een ander systeem verder te werken, of voor de zekerheid (wij hebben het al meerdere malen nodig gehad). Deze bevind zich in onze repo in de map NodeRed.
 
-##Raspberry Pi
+## Raspberry Pi
 We maken dus gebruik van een Raspbeery Pi 2. Maar wat is dit nu juist?
 
 Een Raspberry Pi is een signeloboardcomputer gebaseerd op ARM processoren. Ze zijn zo bekend geworden omdat ze zo goedkoop worden verkocht. 
@@ -525,17 +530,17 @@ De -sn staat voor dat er geen port scan moet gebeuren, we hebben enkel het IP ad
 
 Vanaf we dit nu hebben, kunnen we SSH'en naar de RPi (wel eerst instellen in boot menu). Wij maakten gebruik van Bitvise SSH Client. Hier zit ook SFTP support in, zo kunnen we makkelijk files van de Windows computer slepen naar onze RPi.
 
-##Heatmap uitleg
+## Heatmap uitleg
 *Javascript library voor het visualiseren van heat points in bepaalde gebieden*
 
-###HTML
+### HTML
 *Alle code die in HTML gebruikt wordt*
 
-####div: class heatmap
+#### div: class heatmap
 
 div waar de heatmap terecht komt
 
-####style .heatmap
+#### style .heatmap
 *styling voor de heatmap class*
 
 hier worden de volgende elementen aangepast voor de heatmap:
@@ -545,15 +550,15 @@ hier worden de volgende elementen aangepast voor de heatmap:
 * position: plek waar de heatmap in het scherm tevoorschijn komt
 * background-image: de afbeelding waar de heatmap over komt
 
-###Scripts
+### Scripts
 
-####Library's
+#### Library's
 * heatmap.js : bibliotheek voor heatmap te kunnen gebruiken
 * Jquerry.min.js : Jquerry kunnen gebruiken
 
-####Code ( opzetten van alles )
+#### Code ( opzetten van alles )
 
-#####Sensor
+##### Sensor
 *Array met sensor objecten*
 
 Elk sensor object bevat het volgende:
@@ -563,7 +568,7 @@ Elk sensor object bevat het volgende:
 * value: number, waarde die men krijgt van de Json file
 * radius: number, grootte van de cirkel van een value
 
-#####Data
+##### Data
 *data formaat dat door de heatmap wordt aangenomen*
 
 Dit bevat twee dingen:
@@ -573,12 +578,12 @@ Dit bevat twee dingen:
 
 om deze op de heatmap te zetten maken we gebruik van een functie van de heatmap library: *heatmapinstance.setData(data)*
 
-####Code (invullen van de heatmap)
+#### Code (invullen van de heatmap)
 
 Voorgaande code was allemaal voorbereiding voor de heatmap en de sensoren te kunnen gebruiken.
 Onderstaande code zal meer uitleg geven over hoe we aan data van de sensoren geraken en hoe we deze in de heatmap gaan zetten.
 
-#####Sensordata uitlezen
+##### Sensordata uitlezen
 
 Dit wordt gedaan via de *refreshData()* functie die we gemaakt hebben.
 Deze zal een ajax call doen naar een bepaalde pagina op een site die we hebben opgezet.
@@ -599,7 +604,7 @@ function Refreshdata() {
 
 Als dit succesvol gebeurd returnen we het jsonp object in een global object dat we in het project gaan gebruiken voor de sensoren in te vullen.
 
-#####Sensordata invullen
+##### Sensordata invullen
 
 Een sensorobject in het global object met sensorwaarden bevat 2 dingen:
 * id: hiermee kunnen we bepalen over welke sensor het gaat
@@ -636,7 +641,7 @@ Uiteindelijk wanneer alle sensoren zijn uitgelezen die we hadden binnengebregen 
 }
 ```
 
-####Loop
+#### Loop
 
 Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constant worden uitgevoerd om de laatste info van de sensoren op de heatmap te zetten. Dit gebeurt door een interval in te stellen van een gekozen tijd (500ms in ons geval) en dit de *Update()* functie uit te laten voeren. Gezien de *refreshData()* wordt aangeroepen in de *Update()* functie wordt deze automatisch terug gebruikt.
 ```javascript
@@ -646,8 +651,8 @@ Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constan
 }
 ```
 
-##Architectuur
-###In werkelijk heid
+## Architectuur
+### In werkelijk heid
 
 ![Arcitectuur Werkelijkheid](Architectuur.png)
 
@@ -655,7 +660,7 @@ Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constan
 Moesten we dit project in werkelijkheid gaan uit voeren. Dan zouden we per verdiep een Raspberry Pi voorzien. Deze zou communiceren met de Arduino sensor nodes via RF24. Via het internet zou de data verstuurd worden naar een Rest API. We zouden dus onze Node-Red moeten aanpassen dat hij geen 'get' doet maar een post. In de cloud staat er dan bijvoorbeeld een node server waar we via een REST api deze post kunnen verwerken.
 De REST API zal dan ook gets hebben waardoor we de data op de front-end kunnen visualizeren (Heat map genereren). Per lokaal zou minstens een arduino geplaatst worden die met de Raspberry Pi van dat verdiep communniceerd. Op de Arduino's zullen microfoons en RF24 modules worden aangebracht. De Arduino's fungeren als slave nodes in het sternetwerk.
 
-###Labo
+### Labo
 
 In de praktijk moet er dan ook gekeken worden of het verbruik van onze setup toegestaan is. De Arduino zal naar alle waarschijnlijkheid vervangen moeten worden naar een kleiner en zuiniger model. Ook moeten we dan experimenteren of we aan meshnetworking gaan doen, onze soft- en hardware ondersteund het. Zo kunnen we misschien een beter bereik tewerk stellen. Mocht dit toch niet lukken kunnen we nog altijd krachtigere RF modules proberen (met een echte antenne i.p.v. pcb antenne). Er zou ook gekeken kunnen worden om 2 microfoons te plaatsen en via het meshnetwerk data tussen de Arduino's te sturen (samenwerken).
 

@@ -5,7 +5,7 @@
 * Arne Schoonvliet
 
 ## Inleiding
-In ons derde jaar op AP Hogeschool wordt er van ons verwacht een IoT project te maken. Wij maken deze in groepjes van vier.
+In ons derde jaar op AP Hogeschool wordt er van ons verwacht een IoT project te maken. Wij maken deze in groep van vier.
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
 In ons project hebben we een aantal doelstellingen. Een zeer belangrijke hiervan is het plannen en het verdelen van taken. We werken in een groep van vier. Hier moet zeker de nodige planning gebeuren willen we tot een succesvolle project komen. We leren hier bepaalde technieken voor die ons hierbij kunnen helpen!
@@ -17,28 +17,31 @@ In dit dossier vindt u de schriftelijke neerslag van en de extra informatie van 
 Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 
 ## Doelstellingen
-De hoeveelheid geluid bepalen binnen een bepaalde ruimte en dit weergeven op een website.
-We hebben hier een IoT netwerk (RF24 Mesh) voor nodig om de data (Microfoon) van de verschillende ruimtes naar een device te sturen dat verbonden is met het internet (Rasberry Pi).
+We moeten instaat zijn om de hoeveelheid geluid (intensiteit) te bepalen binnen een bepaalde ruimte en dit weergeven op een medium. Zo kan deze informatie gebruikt worden om een stil plekje te zoeken op de campus.
+
+We hebben hier een IoT netwerk voor nodig om de data van de verschillende ruimtes naar een device te sturen dat verbonden is met het internet (Rasberry Pi).
+
+Ons project heeft de naam **Quiet Time** gekregen.
 
 ## Microfoon
 Om de hoeveelheid geluid te kunnen bepalen binnen een bepaalde ruimte moeten we een device hebben dat geluid kan detecteren. We hebben ervoor gekozen om een microfoon te gebruiken dat analoge data genereert afhankelijk van het geluid.
 
 ### MAX4466
-We hebben ervoor gekozen om een kloon van de Adafruit Electret Microphone Amplifier - MAX4466 with Adjustable Gain te kopen bij mchobby.be . Na eerst wat tegenslag te hebben gehad door het kopen van een microfoon waarbij geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden. Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing. 
+We hebben ervoor gekozen om een Electret Microphone Amplifier - MAX4466 with Adjustable Gain te kopen bij [mchobby.be](http://shop.mchobby.be/breakout/196-micro-electret-amplifier-max4466-avec-gain-reglable-3232100001961.html). Na eerst wat tegenslag te hebben gehad door het kopen van een microfoon waarbij geen analoge uitgang was zijn we toch blij dat we deze microfoon gevonden hadden. Het is zeker geen ideaal component voor onze toepassing maar om de kosten niet absurd hoog te laten gaan is dit de ideale oplossing.
 
 #### Specificaties
-Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede  Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroomverbruik beperkt op slechts 24µA in normale omstandigheden.
+Een microfoon alleen is niet genoeg om aan de ADC (analog digital converter) te hangen. Het signaal moet versterkt worden en dit doet de MAX4466. Dit is een low cost micropower microphone amplifier. Deze werkt van 2.4V tot 5.5V, heeft een goede Power-Supply Rejection Ratio (112dB) en Common-Mode Rejection Ratio (126dB). Verder is het stroomverbruik beperkt op slechts 24µA in normale omstandigheden.
 
 #### Gebruik
 We hebben deze microfoon natuurlijk niet zelf opgebouwd. We hebben deze opgebouwd gekocht zodat we deze ook onmiddellijk konden gebruiken. Het aansluiten van deze microfoon is ontzettend gemakkelijk. We hebben maar 3 pinnen: de VCC (3.3V), OUT en de GND. Waar VCC en GND moeten is duidelijk en de OUT hangen we aan een analoge ingang van de ADC.
 
-![alt text](http://i.imgur.com/L9gK17x.jpg?1 "Logo Title Text 1")
+![Foto Microfoon](http://i.imgur.com/L9gK17x.jpg?1 "Logo Title Text 1")
 
 ### Code
-Een kort woordje uitleg over de code in verband met de microfoon. Deze code is de standalone code voor de microfoon maar word gebruikt in de eigenlijke node code. Voor de uitleg van deze code lijkt het me makkelijker om dit op deze manier te doen.
-
+Een kort woordje uitleg over de code in verband met de microfoon. Deze code is de standalone code voor de microfoon maar wordt gebruikt in de eigenlijke node code. Voor de uitleg van deze code lijkt het me makkelijker om dit op deze manier te doen.
 
 Eerst hebben we enkele globale variabele die we initialiseren en verder zorgen we dat we de serial initialiseren voor debug doeleinde.
+
 ```c
 const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
@@ -95,20 +98,28 @@ void loop()
 * De sensitiviteit van de microfoon is niet optimaal
 * Het totale bereik van de microfoon had beter gekunt
 * Het meest ideale zou zijn dat we een microfoon hadden die dB waardes zou kunnen geven. Dit zou de prijs absurd hoog brengen en we hebben er dus voor gekozen om dit niet te doen.
- 
 
 ##XBee
-Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen zigbee gebaseerd protocol. Wat minder praktisch aan een XBee is, is de manier van programmeren. Als u dit via usb wilt doen moet u eerst de microcontroller uit de arduino halen. Als u dit niet doet zal er via USB communicatie zijn tussen de computer en de microcontroller maar geen van beide zal de Xbee module kunnen bereiken. De Xbee sluit u op de Arduino aan via een schield. Op dit schield zijn 2 jumpers aanwezig plaats deze voor het programmeren van de Xbee naar USB positie.
+Xbee’s zijn modules gemaakt door Digi. Deze embedded modules bieden de mogelijkheid tot draadloze eindverbindingen tussen apparaten. Deze modules gebruiken het IEEE 802.15.4 netwerkprotocol voor snelle point-to - multipoint of peer - to-peer netwerken. Ze zijn ontworpen voor high-throughput toepassingen die een lage latency en voorspelbare communicatie timing. XBee is Digi’s eigen Zigbee gebaseerd protocol.
+
+Wat minder praktisch aan een XBee is, is de manier van programmeren. Als u dit via usb wilt doen moet u eerst de microcontroller uit de Arduino halen. Als u dit niet doet zal er via USB communicatie zijn tussen de computer en de microcontroller maar geen van beide zal de Xbee module kunnen bereiken. De Xbee sluit u op de Arduino aan via een schield. Op dit schield zijn 2 jumpers aanwezig plaats deze voor het programmeren van de Xbee naar USB positie.
+
+Het kan makkelijker d.m.v. de Xbee USB adapter. Dan heb je enkel je Xbee module nodig en een usb kabel. Echter zijn deze best prijzig!
 
 ###Wat hebben we bereikt
-We hebben een succes volle p-p connectie bereik tussen 2 Xbee S1. Jammer genoeg kunnen Xbee S1 niet in een mesh samen werken. Na onderzoek bleek dat de S2 hiervoor wel geschikt waren. Nadat onze school hiervan niet in het bezit was. Kozen we voor de ESP8266. Waarom dit toch niet de oplossing bleek te zijn kan u in een apart hoofdstuk over ESP8266 lezen. RF24 modules boden ons de uiteindelijke oplossing aan.
+We hebben een succesvolle p-p connectie bereikt tussen 2 Xbee S1. Jammer genoeg kunnen Xbee S1 niet in een mesh samen werken.
+
+Na onderzoek bleek dat de S2 hiervoor wel geschikt waren. We hebben dit ontdenkt toen we aan het proberen waren om onze Xbee standalone (zonder Arduino) analoog te laten samplen.
+Onze school was niet in het bezig van S2 modules, ze waren ook te duur om ze zelf te kopen (of te lang onderweg). Hierna hebben we gekozen voor de ESP8266. Waarom dit toch niet de oplossing bleek te zijn kan u in een apart hoofdstuk over ESP8266 lezen. RF24 modules boden ons de uiteindelijke oplossing aan.
 
 ###Het verschil tussen XBee S1 en S2
-Om te beginnen is een groot verschil tussen de 2  dat de S1 modules niet geconfigureerd kunnen worden, waar de S2 modules eerst geconfigureerd moeten worden. Dit maakt de S1 modules makkelijk in gebruik maar de toepassingen zijn beperkt tot point to point communicatie. Dit kan je ook met S2 modules maar S1 modules kunnen dit zonder enige configuratie. De S2 modules kunnen zowel in transparante modus werken als met API  commando’s Dit hangt af van de firmware die je gebruikt om de XBee’s mee te configureren. Werkend in de transparante modus werken de modules als seriële lijn vervanger. Alle UART data ontvangen op de Din wordt opgeslagen voor RF transmissie. Wanneer RF-data ontvangen wordt zal de opgeslagen data worden verzonden door de Dout pin. De module configuratie parameters worden geconfigureerd met de AT command mode interface. API bediening is een alternatief voor transparante werking . Het frame- gebaseerde API breidt de mate waarin een host- toepassing kan communiceren met de netwerkmogelijkheden van de module Uit. in API -modus , alle gegevens binnenkomen en uitgaand zijn opgenomen in frames die handelingen of gebeurtenissen binnen de module te definiëren. Een groot voordeel van de S2 modules tegen over de S1 modules, is de mogelijkheid tot het werken binnen een mesh netwerk. Je kan de S1 series onderscheiden van de S2 series door naar een opschrift op de module te zoeken. Is er geen spoor van een  opschrift dat wijst op de serie, Dan heb je te maken met een S1 in geval van een S2 zal dit op de module staan. S1 en S2 modules zijn onmogelijk compatibel.
+Om te beginnen is een groot verschil tussen de 2 dat de S1 modules niet geconfigureerd kunnen worden, waar de S2 modules eerst geconfigureerd moeten worden. Dit maakt de S1 modules makkelijk in gebruik zijn. Maar de toepassingen zijn beperkt tot point to point communicatie. Dit kan je ook met S2 modules maar S1 modules kunnen dit zonder enige configuratie. De S2 modules kunnen zowel in transparante modus werken als met API commando’s. Dit hangt af van de firmware die je gebruikt om de XBee’s mee te configureren. Werkend in de transparante modus werken de modules als seriële lijn vervanger. Alle UART data ontvangen op de Din wordt opgeslagen voor RF transmissie. Wanneer RF-data ontvangen wordt zal de opgeslagen data worden verzonden door de Dout pin. De module configuratie parameters worden geconfigureerd met de AT command mode interface. API bediening is een alternatief voor transparante werking. Het frame- gebaseerde API breidt de mate waarin een host- toepassing kan communiceren met de netwerkmogelijkheden van de module Uit.
+
+In API-modus zijn alle gegevens binnenkomend en uitgaand, opgenomen in frames die handelingen of gebeurtenissen binnen de module definiëren.
+Een groot voordeel van de S2 modules tegen over de S1 modules, is de mogelijkheid tot het werken binnen een mesh netwerk. Je kan de S1 series onderscheiden van de S2 series door naar een opschrift op de module te zoeken. Is er geen spoor van een  opschrift dat wijst op de serie, Dan heb je te maken met een S1 in geval van een S2 zal dit op de module staan. S1 en S2 modules zijn onmogelijk compatibel.
 
 ###Verschil 802.15.4 en Zigbee
-802.15.4 is een standaard opgesteld door IEEE, momenteel misschien de grootste standaard voor kleine data pakketjes WPANs (wireless personal area network). Er zijn vele sub categorieën. De standaard wordt veelal gebruikt bij het monitoren en besturen van applicaties met kleine data trafiek, een lange levensduur en een laag stroomverbruik. De 802.15.4 standaard gebruikt enkel de 2 onderste lagen van het osi model. Namelijk de fysische en de data link laag(Mac).  Buiten deze 2 lagen gebruikt 802.15.4 enkel nog logical link control (LLC) en service specific convergence sub-layer (SSCS) om te communiceren met alle hogere lagen zoals aanvullende standaarden (zoals zigbee) bepalen. De standaard is dus ontworpen om als basis te dienen voor andere protocollen en functies. De meest bekende uitbreiding op 802.15.4 is dus ZigBee. Een standaard van de ZigBee alliantie. ZigBee gebruikt lagen 3 en hoger van het osi model. Hier zullen zaken als authenticatie, encryptie en data routering voor het gebruik van een mesh netwerk mogelijk zijn.
- 
+802.15.4 is een standaard opgesteld door IEEE, momenteel misschien de grootste standaard voor kleine data pakketjes WPANs (wireless personal area network). Er zijn vele sub categorieën. De standaard wordt veelal gebruikt bij het monitoren en besturen van applicaties met kleine data trafiek, een lange levensduur en een laag stroomverbruik. De 802.15.4 standaard gebruikt enkel de 2 onderste lagen van het osi model. Namelijk de fysische en de data link laag(Mac).  Buiten deze 2 lagen gebruikt 802.15.4 enkel nog logical link control (LLC) en service specific convergence sub-layer (SSCS) om te communiceren met alle hogere lagen zoals aanvullende standaarden (zoals zigbee) bepalen. De standaard is dus ontworpen om als basis te dienen voor andere protocollen en functies. De meest bekende uitbreiding op 802.15.4 is dus ZigBee. Een standaard van de ZigBee alliantie. ZigBee gebruikt lagen 3 en hoger van het OSI model. Hier zullen zaken als authenticatie, encryptie en data routering voor het gebruik van een mesh netwerk mogelijk zijn.
 
 ##WiFi Module - ESP8266
 De ESP8266 WiFi module is een op zichzelf staand “System on a chip” (SoC) met geïntegreerde TCP / IP-protocol stack. De ESP8266 kan zowel connecteren naar een wifi netwerk, als er zelf een hosten. Elke ESP8266 module komt voorgeprogrammeerd met een AT commando set firmware, m.a.w. u kunt hem aansluiten aan je Arduino en je hebt dezelfde functionaliteit die een  wifischield zou bieden. Het mooie aan deze module is dat ze krachtig genoeg is om intern processen uit te voeren en data op te slaan. Het is mogelijk om aan deze module sensoren aan te sluiten zonder een arduino en een arduinoprogramma rechtstreeks in de module up te loaden. Verder heeft hij een zelf kalibrerende RF-module zodat geen externe RF onderdelen nodig zijn.
@@ -224,6 +235,11 @@ We doen dit door de Arduino code nog eens up te loaden naar een andere Arduino m
 
 De laatste stappen zijn de Arduino code integreren in de sketch van de Microfoon (@Arne Schoonvliet) en de sketch van de RPi2 aanpassen naar onze noden. Dit leest u in het volgende deel!
 
+##Arduino code
+Deze vindt u apart in onze repo. Het enigste wat aangepast moest worden t.o.v. de example file was het verwijderen van het ontvangen van data. En het veranderen van de naam van die variable die door gezonden wordt.
+
+Ik raad u aan de code te bekjken, deze wordt volledig uitgelegd a.d.h.v. commentaar
+
 ##RaspPI code 
 
 ```c
@@ -331,7 +347,7 @@ Elke keer als onze text file aangepast wordt zal Node Red de nieuwe lijn tekst b
 Bij deze bedanken we Dhr. Luyts nog eens voor zijn kennis van Linux, zonder hem hadden we deze commando's niet gekend. En was het project niet hetzelfde geweest!
 
 ##NodeRED
-Node-RED zal dienen als onze backend. 
+Node-RED zal dienen als onze backend.
 
 Node Red is een tool om gemakkelijk een IoT netwerk te bouwen. Het is bedoeld om de verschillende onderdelen van je IoT netwerk te 'verbinden' (laten communiceren) met elkaar. Het is een grafische tool dat werkt met click and drop ban bepaalde blokken. Je maakt verbindingen door lijnen te verbinden tussen blokken.
 
@@ -611,10 +627,13 @@ In het labo hebben we een testopstelling gebouwd. Deze bestond uit één Raspber
 
 
 ## Conclusie
-De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de IoT wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
+De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de IoT wereld. We kunnen concluderen dat dit onderzoek zeer interessant was.
 Omdat we in groep werkten was het belangrijk dat we een goede taakverdeling hadden. Als u naar het resultaat kijkt mag er geconcludeerd worden dat we dit uitstekend gedaan hebben. We hebben ons project afgekregen. We mogen hier zeer trots op zijn!
-Verder was het ook een zeer leerrijk proces. Ééntje met up en down, iets wat ieder project wel heeft. We hebben leren werken met SPI en hoe we de nrf24l01 kunnen gebruiken binnen een IoT netwerk. Dit dankzij de uitstekende library die we gevonden hebbe. Het is verder belangrijk dat je samen achter een beslissing staat. Ook hebben we geleerd dat je eerste en ook je tweede en derde idee niet steeds het beste idee is en dat je moet durven veranderen 
-We willen ook graag lector M. Luyts bedanken voor de hulp als we die nodig hadden. Zijn ervaring en zijn vindingrijkheid heeft ons zeker af en toe geholpen. 
+Verder was het ook een zeer leerrijk proces. Ééntje met up en down, iets wat ieder project wel heeft. We hebben leren werken met SPI en hoe we de nRF24L01 kunnen gebruiken binnen een IoT netwerk. Dit dankzij de uitstekende library die we gevonden hebben. We hebben ook een beetje geproeft van de mogelijkheden van de Raspberry Pi. Zo hebben we zaken over Linx bijgeleerd maar ook het IoT framework Node-Red.
+Het is verder belangrijk dat je samen achter een beslissing staat. Ook hebben we geleerd dat je eerste en ook je tweede en derde idee niet steeds het beste idee is en dat je moet durven veranderen.
+
+We willen ook graag lector M. Luyts bedanken voor de hulp als we die nodig hadden. Zijn ervaring en zijn vindingrijkheid heeft ons zeker af en toe geholpen.
+
 Het was een leerrijk proces en we kijken uit naar onze bachelor proef.
 
 Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen

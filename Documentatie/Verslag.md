@@ -517,18 +517,23 @@ Omdat bovenstaande gewoon functies zijn moeten we ervoor zorgen dat deze constan
 ![Arcitectuur Werkelijkheid](Architectuur.png)
 
 
-moesten we dit project in werkelijkheid gaan uit voeren. Dan zouden we per verdiep een Raspberry pi voor zien. Deze zou communiceren met Arduino sensor nodes via RF24. via het interner zou de data verstuurd worden naar een rest API. De back end zal van die data een Front end Heat map genereren. Per lokaal zou minstens een arduino geplaatst worden die met de Raspberry pi van dat verdiep communniceerd. Op de arduino's zullen microfoons en RF24 modules worden aangebracht. De arduino's fungeren als slave nodes in het mesh netwerk.
+Moesten we dit project in werkelijkheid gaan uit voeren. Dan zouden we per verdiep een Raspberry Pi voorzien. Deze zou communiceren met de Arduino sensor nodes via RF24. Via het internet zou de data verstuurd worden naar een Rest API. We zouden dus onze Node-Red moeten aanpassen dat hij geen 'get' doet maar een post. In de cloud staat er dan bijvoorbeeld een node server waar we via een REST api deze post kunnen verwerken.
+De REST API zal dan ook gets hebben waardoor we de data op de front-end kunnen visualizeren (Heat map genereren). Per lokaal zou minstens een arduino geplaatst worden die met de Raspberry Pi van dat verdiep communniceerd. Op de Arduino's zullen microfoons en RF24 modules worden aangebracht. De Arduino's fungeren als slave nodes in het sternetwerk.
+
+In de praktijk moet er dan ook gekeken worden of het verbruik van onze setup toegestaan is. De Arduino zal naar alle waarschijnlijkheid vervangen moeten worden naar een kleiner en zuiniger model. Ook moeten we dan experimenteren of we aan meshnetworking gaan doen, onze soft- en hardware ondersteund het. Zo kunnen we misschien een beter bereik tewerk stellen. Mocht dit toch niet lukken kunnen we nog altijd krachtigere RF modules proberen (met een echte antenne i.p.v. pcb antenne). Er zou ook gekeken kunnen worden om 2 microfoons te plaatsen en via het meshnetwerk data tussen de Arduino's te sturen (samenwerken).
+
+Er is nog veel dat kan, maar jammer is het project op zijn einde gelopen!
 
 
-![Arcitectuur Werkelijkheid](Architectuur2.png)
+![Arcitectuur Labo](Architectuur2.png)
 
 
-In het labo hadden we één raspberry pi waar de Backend op runde de front end zal via internet de data ophalen. De raspberry pi communiceerde met 2 arduino's met elks een RF24 module en een microfoon.
+In het labo hebben we een testopstelling gebouwd. Deze bestond uit één Raspberry Pi 3 waar de backe-nd op draaide de front-end zal via het lokaal netwerk de data ophalen. De Raspberry Pi 2 communiceerde met 2 arduino's met elks een RF24 module en een microfoon.
 
 
 ## Conclusie
 De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de IoT wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
-Omdat we in groep werkten was het belangrijk dat we een goede taakverdeling hadden. Als u naar het resultaat kijkt mag er geconcludeerd worden dat we dit uitstekend gedaan hebben. We hebben ons project afgekregen. We mogen hier zeer trots op zijn! 
+Omdat we in groep werkten was het belangrijk dat we een goede taakverdeling hadden. Als u naar het resultaat kijkt mag er geconcludeerd worden dat we dit uitstekend gedaan hebben. We hebben ons project afgekregen. We mogen hier zeer trots op zijn!
 Verder was het ook een zeer leerrijk proces. Ééntje met up en down, iets wat ieder project wel heeft. We hebben leren werken met SPI en hoe we de nrf24l01 kunnen gebruiken binnen een IoT netwerk. Dit dankzij de uitstekende library die we gevonden hebbe. Het is verder belangrijk dat je samen achter een beslissing staat. Ook hebben we geleerd dat je eerste en ook je tweede en derde idee niet steeds het beste idee is en dat je moet durven veranderen 
 We willen ook graag lector M. Luyts bedanken voor de hulp als we die nodig hadden. Zijn ervaring en zijn vindingrijkheid heeft ons zeker af en toe geholpen. 
 Het was een leerrijk proces en we kijken uit naar onze bachelor proef.
